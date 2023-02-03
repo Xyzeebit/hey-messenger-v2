@@ -17,6 +17,9 @@
     "passport": "^0.6.0",
     "socket.io": "^4.5.2"
   },
+  "scripts": {
+    "start": "node app"
+  },
   "devDependencies": {
     "chai": "^4.3.6",
     "chai-http": "^4.3.0",
