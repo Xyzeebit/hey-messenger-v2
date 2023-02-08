@@ -3,6 +3,7 @@ const http = require("http");
 const express = require('express');
 const path = require('path');
 const routes = require('./routes');
+const init = require('./controllers');
 
 const app = express();
 const server = http.createServer(app);
@@ -18,19 +19,17 @@ app.use(routes);
 io.on("connection", (socket) => {
     console.log("connection established");
 
+    init(io, socket);
+
     socket.on("error", (err) => {
         console.log(err.message);
     });
-
-    socket.on('chat', msg => {
-        const sender = Math.random();
-        if (sender > 0.5) {
-            socket.emit("msg", { sender: 'owner', msg });
-        } else {
-            socket.emit("msg", { sender: "friend", msg });
-        }
-    });
     
+});
+
+app.use((req, res, next) => {
+    req.io = io;
+    next();
 });
 
 server.listen(PORT, () => {

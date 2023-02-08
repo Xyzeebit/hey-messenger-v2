@@ -4,6 +4,11 @@
 
 main {
     display: flex;
+    justify-items: flex-start;
+    align-items: flex-start;
+}
+aside {
+    width: 30%;
 }
 
 h1 {

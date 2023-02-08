@@ -11,9 +11,9 @@
             <aside>
                 <h1>Contact List</h1>
                 <ul>
-                    <li>user 1</li>
-                    <li>user 2</li>
-                    <li>user 3</li>
+                    <% for (const user of users) { %> 
+                    <li><%= user.name %> </li>
+                    <% } %> 
                 </ul>
             </aside>
             <div class="chat__window">
