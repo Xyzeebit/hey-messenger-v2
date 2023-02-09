@@ -1,14 +1,14 @@
 const User = require('../models/userSchema');
 const Messages = require('../models/messagesSchema');
 
-async function getUser() {
-    try {
-        const { messages } = await User.findOne({ username: "donald" }).populate('messages').exec();
-        console.log(messages);
-    } catch (error) {
-        console.log(error.message)
-    }
-}
+// async function getUser() {
+//     try {
+//         const { messages } = await User.findOne({ username: "donald" }).populate('messages').exec();
+//         console.log(messages);
+//     } catch (error) {
+//         console.log(error.message)
+//     }
+// }
 
 function initSocket(io, socket) {
     // getUser();
