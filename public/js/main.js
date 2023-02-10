@@ -8,6 +8,18 @@ window.addEventListener('DOMContentLoaded', function (event) {
         console.log("connected to server");
     });
 
+
+    addHeaderShadow();
+
+
+
+
+
+
+
+
+
+
     const form = document.getElementById("form");
     const chats = document.querySelector('.chats')
 
@@ -29,3 +41,9 @@ window.addEventListener('DOMContentLoaded', function (event) {
     })
 
 });
+
+const addHeaderShadow = () => {
+    setTimeout(() => {
+        document.querySelector(".intro h1 span").classList.add("showdow");
+    }, 300);
+}

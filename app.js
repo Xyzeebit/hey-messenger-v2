@@ -4,9 +4,8 @@ const express = require('express');
 const path = require('path');
 const routes = require('./routes');
 const init = require('./controllers');
-const dbConnect = require('./libs/dbConnect');
+// const dbConnect = require('./libs/dbConnect');
 const { default: helmet } = require('helmet');
-const csrf = require('csrf');
 const cors = require('cors');
 
 const app = express();
@@ -14,16 +13,15 @@ const server = http.createServer(app);
 const io = require('socket.io')(server);
 const PORT = process.env.PORT;
 
-app.use(helmet);
-app.use(csrf);
-app.use(cors);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.set("view engine", "ejs");
+app.use(helmet());
+app.use(cors());
 app.use(express.static(path.join(__dirname, "public")))
 app.use(routes);
 
-dbConnect();
+// dbConnect();
 
 io.on("connection", (socket) => {
     console.log("connection established");
