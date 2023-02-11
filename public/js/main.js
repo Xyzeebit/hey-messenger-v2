@@ -10,7 +10,7 @@ window.addEventListener('DOMContentLoaded', function (event) {
 
 
     addHeaderShadow();
-
+    slideInHome();
 
 
 
@@ -44,6 +44,17 @@ window.addEventListener('DOMContentLoaded', function (event) {
 
 const addHeaderShadow = () => {
     setTimeout(() => {
-        document.querySelector(".intro h1 span").classList.add("shadow");
+        document.querySelector("h1.app__title span").classList.add("shadow");
+    }, 1000);
+}
+
+const slideInHome = () => {
+    setTimeout(() => {
+        document
+          .querySelector(".intro img")
+            .classList.add("slide__in");
+        document.querySelector(".welcome__text p")
+            .classList.add("slide__in");
+        
     }, 1000);
 }
