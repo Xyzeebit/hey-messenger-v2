@@ -44,6 +44,6 @@ window.addEventListener('DOMContentLoaded', function (event) {
 
 const addHeaderShadow = () => {
     setTimeout(() => {
-        document.querySelector(".intro h1 span").classList.add("showdow");
-    }, 300);
+        document.querySelector(".intro h1 span").classList.add("shadow");
+    }, 1000);
 }
