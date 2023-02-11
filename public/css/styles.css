@@ -102,7 +102,26 @@ h1.app__title span.shadow {
 .start__button:active {
     background: #239644c4;
 }
-
+.intro__forms {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    height: 50vh;
+    overflow: hidden;
+}
+.intro__forms img {
+    width: 220px;
+    height: 220px;
+    transform: translateY(400px);
+    transition: transform 500ms, opacity 1000ms ease-in;
+    opacity: 0.3;
+    
+}
+.intro__forms img.slide__in {
+    transform: translateY(0px);
+    opacity: 1;
+}
 
 .tab {
     height: 100%;

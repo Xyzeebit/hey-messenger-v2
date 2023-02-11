@@ -11,7 +11,7 @@ window.addEventListener('DOMContentLoaded', function (event) {
 
     addHeaderShadow();
     slideInHome();
-
+    getStarted();
 
 
 
@@ -53,8 +53,20 @@ const slideInHome = () => {
         document
           .querySelector(".intro img")
             .classList.add("slide__in");
-        document.querySelector(".welcome__text p")
-            .classList.add("slide__in");
-        
+        document
+          .querySelector(".welcome__text p")
+          .classList.add("slide__in");
     }, 1000);
+}
+
+const getStarted = () => {
+    const btn = document.querySelector("button.start__button");
+    const forms = document.getElementById("forms");
+    btn.onclick = function(evt) {
+        forms.scrollIntoView({ behavior: 'smooth' }, true);
+    }
+    setTimeout(() => {
+        document.querySelector(".intro__forms img").classList.add("slide__in");
+    }, 500);
+    
 }
