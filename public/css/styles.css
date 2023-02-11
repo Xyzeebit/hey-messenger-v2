@@ -103,6 +103,82 @@ h1.app__title span.shadow {
     background: #239644c4;
 }
 
+
+.tab {
+    height: 100%;
+    overflow: hidden;
+}
+.tab__bar {
+    display: flex;
+
+}
+.tab__bar button {
+    width: 50%;
+    background: var(--white);
+    font-weight: 500;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+    padding: 10px;
+    transition: background 300ms;
+}
+.tab__bar button.current {
+    background: #000;
+    color: var(--white);
+}
+.tab__bar button:active {
+    background: var(--secondary);
+}
+.tab__content {
+    width: 200vw;
+}
+.login__content, .signup__content {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    flex-direction: column;
+    width: 100vw;
+    padding: 1rem;
+}
+.login__content label {
+    width: 80%;
+    font-weight: 600;
+    font-size: 1.2rem;
+    padding: 0.8rem;
+    display: flex;
+    justify-content: flex-start;
+    justify-items: center;
+    flex-direction: column;
+}
+.login__content label span {
+    padding-bottom: 0.5rem;
+}
+.login__content input {
+    border: 1px solid #000;
+    outline: none;
+    width: 100%;
+    padding: 10px 20px 10px 10px;
+    font-size: 1rem;
+    font-weight: 500;
+}
+.login__content input:focus {
+    outline: 2px solid #000;
+}
+.submit__form_button {
+    width: 80%;
+    background: #516ae2;
+    padding: 10px;
+    color: var(--white);
+    border: none;
+    outline: 0px solid var(--accent);
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background 300ms;
+}
+.submit__form_button:active {
+    background: #516ae2d1;
+}
+
 aside {
     width: 30%;
 }
