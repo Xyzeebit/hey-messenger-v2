@@ -5,6 +5,7 @@
     --accent: #239644;  /*#6abe82;*/
     --primary: #e3e2e7;
     --secondary: #e25151; /*#f2c6ab;*/
+    --blue: #516ae2;
 
     --bg: #fff;
     --white: #fff;
@@ -38,7 +39,7 @@ h1.app__title {
     padding: 1rem;
 }
 h1.app__title span {
-    background: var(--secondary);
+    background: var(--blue);
     color: var(--bg);
     padding: 1rem;
     margin-right: 5px;
@@ -50,7 +51,7 @@ h1.app__title span.shadow {
     box-shadow: 13px 20px 0px 0px #000;
 }
 .intro img {
-    width: 200px;
+    width: 190px;
     height: 200px;
     transform: translateY(400px);
     transition: transform 500ms, opacity 1000ms ease-in;
@@ -139,17 +140,24 @@ h1.app__title span.shadow {
     border: none;
     outline: none;
     padding: 10px;
-    transition: background 300ms;
+    transition: background 500ms;
 }
 .tab__bar button.current {
     background: #000;
     color: var(--white);
 }
 .tab__bar button:active {
-    background: var(--secondary);
+    background: var(--blue);
 }
 .tab__content {
     width: 200vw;
+    transition: transform 300ms linear;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.slide__right {
+    transform: translateX(-100vw);
 }
 .login__content, .signup__content {
     display: flex;
@@ -196,6 +204,102 @@ h1.app__title span.shadow {
 }
 .submit__form_button:active {
     background: #516ae2d1;
+}
+.input__err {
+    color: var(--secondary);
+}
+
+.signup__content {
+    overflow: hidden;
+}
+.uname__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    display: none;
+}
+.uname__container label {
+    width: 80%;
+    font-weight: 600;
+    font-size: 1.2rem;
+    padding: 0.8rem;
+    display: flex;
+    justify-content: flex-start;
+    justify-items: center;
+    flex-direction: column;
+}
+.uname__container label span {
+    padding-bottom: 0.5rem;
+}
+.uname__container input {
+    border: 1px solid #000;
+    outline: none;
+    width: 100%;
+    padding: 10px 20px 10px 10px;
+    font-size: 1rem;
+    font-weight: 500;
+}
+.uname__container input:focus {
+    outline: 2px solid #000;
+}
+.btn__next {
+    background-color: var(--blue);
+    width: 50px;
+    height: 50px;
+    margin-top: 1rem;
+    border-radius: 100px;
+    border: 0px solid var(--blue);
+    outline-color: var(--blue);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 300ms;
+}
+.btn__next img {
+    transform: scale(0.7);
+    filter: invert(1);
+}
+.btn__next:active {
+    transform: scale(1.2);
+}
+.btn__next:disabled {
+    background-color: #95a4eec0;
+}
+.pwd__container {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+    width: 100%;
+}
+.pwd__container label {
+    font-weight: 600;
+    font-size: 1.2rem;
+    padding: 0.5rem 0.8rem 0 0.8rem;
+    display: flex;
+    justify-content: flex-start;
+    justify-items: center;
+    flex-direction: column;
+}
+.pwd__container label span {
+    padding-bottom: 0.2rem;
+}
+.pwd__container input {
+    border: 1px solid #000;
+    outline: none;
+    width: 100%;
+    padding: 10px 20px 10px 10px;
+    font-size: 1rem;
+    font-weight: 500;
+}
+.pwd__container input:focus {
+    outline: 2px solid #000;
+}
+.pwd__container button {
+    margin: 10px auto;
 }
 
 aside {

@@ -20,14 +20,34 @@ window.addEventListener('DOMContentLoaded', function (event) {
 
 
 
-    const form = document.getElementById("form");
-    const chats = document.querySelector('.chats')
+    // const form = document.getElementById("form");
+    const chats = document.querySelector('.chats');
+    const loginBtn = document.querySelector('button.login');
+    const signupBtn = document.querySelector('button.signup');
+    const tabContent = document.querySelector('.tab__content');
 
-    form.addEventListener("submit", (evt) => {
-        evt.preventDefault();
-        const input = evt.target.chatbox;
-        socket.emit('chat', input.value);
+    // form.addEventListener("submit", (evt) => {
+    //     evt.preventDefault();
+    //     const input = evt.target.chatbox;
+    //     socket.emit('chat', input.value);
+    // });
+
+    loginBtn.addEventListener('click', function(evt) {
+        this.classList.contains('current')
+          ? evt.preventDefault()
+          : switchTab(loginBtn, signupBtn);
+        
+        slideRight(tabContent, false);
     });
+    signupBtn.addEventListener("click", function(evt) {
+        this.classList.contains("current")
+          ? evt.preventDefault()
+          : switchTab(loginBtn, signupBtn);
+        
+        slideRight(tabContent, true);
+    });
+
+    
 
     const send = (sender, text) => {
         const chat = document.createElement("div");
@@ -44,7 +64,7 @@ window.addEventListener('DOMContentLoaded', function (event) {
 
 const addHeaderShadow = () => {
     setTimeout(() => {
-        document.querySelector("h1.app__title span").classList.add("shadow");
+        document.querySelector(".intro h1.app__title span").classList.add("shadow");
     }, 1000);
 }
 
@@ -64,9 +84,27 @@ const getStarted = () => {
     const forms = document.getElementById("forms");
     btn.onclick = function(evt) {
         forms.scrollIntoView({ behavior: 'smooth' }, true);
+        setTimeout(() => {
+            document
+                .querySelector(".intro__forms h1.app__title span")
+                .classList.add("shadow");
+
+            document
+                .querySelector(".intro__forms img")
+                .classList.add("slide__in");
+        }, 500);
     }
-    setTimeout(() => {
-        document.querySelector(".intro__forms img").classList.add("slide__in");
-    }, 500);
-    
+}
+
+function switchTab(eleft, eright) {
+    eleft.classList.toggle("current");
+    eright.classList.toggle("current");
+}
+
+function slideRight(el, slide) {
+    if (slide) {
+        el.classList.add('slide__right');
+    } else {
+        el.classList.remove('slide__right');
+    }
 }

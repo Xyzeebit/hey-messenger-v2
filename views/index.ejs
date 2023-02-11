@@ -8,7 +8,7 @@
         <main>
             <div class="intro">
                 <h1 class="app__title"><span>Hey!</span> Messenger</h1>
-                <img src="/img/logo.png" alt="networking" width="100" height="100" />
+                <img src="/img/logo-alt.png" alt="networking" width="100" height="100" />
             </div>
             <div class="start__button_container">
                 <div class="welcome__text">
@@ -39,7 +39,29 @@
                         <button class="submit__form_button">Continue</button>
                     </div>
                     <div class="signup__content">
-
+                        <div class="uname__container">
+                            <label for="username">
+                                <span>Username</span>
+                                <small class="input__err">*username is not valid</small>
+                                <input type="text" name="username" id="username" placeholder="Username">
+                            </label>
+                            <button class="btn__next" title="next">
+                                <img src="/img/right-arrow.svg" width="25" height="25" alt="next" />
+                            </button>
+                        </div>
+                        <div class="pwd__container">
+                            <label for="pwd">
+                                <span>Password</span>
+                                <small class="input__err">Password should be at least 6 characters</small>
+                                <input type="password" name="pwd" id="pwd" placeholder="Password">
+                            </label>
+                            <label for="cpwd">
+                                <span>Confirm password</span>
+                                <small class="input__err">Password should match</small>
+                                <input type="password" name="cpwd" id="cpwd" placeholder="Confirm password">
+                            </label>
+                            <button class="submit__form_button">Continue</button>
+                        </div>
                     </div>
                 </div>
             </div>
