@@ -25,6 +25,7 @@ window.addEventListener('DOMContentLoaded', function (event) {
     const loginBtn = document.querySelector('button.login');
     const signupBtn = document.querySelector('button.signup');
     const tabContent = document.querySelector('.tab__content');
+    const nextBtn = this.document.querySelector('button.btn__next');
 
     // form.addEventListener("submit", (evt) => {
     //     evt.preventDefault();
@@ -46,6 +47,8 @@ window.addEventListener('DOMContentLoaded', function (event) {
         
         slideRight(tabContent, true);
     });
+    
+    nextBtn.onclick = showPassword;
 
     
 
@@ -107,4 +110,15 @@ function slideRight(el, slide) {
     } else {
         el.classList.remove('slide__right');
     }
+}
+
+function showPassword(evt) {
+    const u = document.querySelector(".uname__container");
+    const p = document.querySelector(".pwd__container");
+    u.style.display = 'none';
+    p.style.display = 'flex';
+}
+
+function login() {
+    
 }

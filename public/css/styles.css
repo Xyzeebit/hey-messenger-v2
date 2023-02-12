@@ -163,9 +163,11 @@ h1.app__title span.shadow {
     display: flex;
     align-items: center;
     justify-items: center;
-    flex-direction: column;
     width: 100vw;
     padding: 1rem;
+}
+.login__content {
+    flex-direction: column;
 }
 .login__content label {
     width: 80%;
@@ -206,11 +208,18 @@ h1.app__title span.shadow {
     background: #516ae2d1;
 }
 .input__err {
-    color: var(--secondary);
+    color: #fd0707;
+    font-weight: 500;
+}
+.hide {
+    display: none;
 }
 
 .signup__content {
     overflow: hidden;
+    display: flex;
+    justify-items: center;
+    align-items: center;
 }
 .uname__container {
     display: flex;
@@ -218,7 +227,7 @@ h1.app__title span.shadow {
     justify-content: center;
     align-items: center;
     width: 100%;
-    display: none;
+    transition: transform 500ms;
 }
 .uname__container label {
     width: 80%;
@@ -246,10 +255,12 @@ h1.app__title span.shadow {
 }
 .btn__next {
     background-color: var(--blue);
-    width: 50px;
+    width: 100px;
     height: 50px;
     margin-top: 1rem;
-    border-radius: 100px;
+    color: var(--white);
+    font-weight: 500;
+    font-size: 1rem;
     border: 0px solid var(--blue);
     outline-color: var(--blue);
     display: flex;
@@ -262,7 +273,7 @@ h1.app__title span.shadow {
     filter: invert(1);
 }
 .btn__next:active {
-    transform: scale(1.2);
+    transform: scale(0.9);
 }
 .btn__next:disabled {
     background-color: #95a4eec0;
@@ -274,6 +285,7 @@ h1.app__title span.shadow {
     justify-content: center;
     /* align-items: center; */
     width: 100%;
+    display: none;
 }
 .pwd__container label {
     font-weight: 600;

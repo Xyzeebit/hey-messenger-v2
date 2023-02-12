@@ -28,6 +28,7 @@
                 </div>
                 <div class="tab__content">
                     <div class="login__content">
+                        <small class="input__err hide">*Invalid username or password</small>
                         <label for="username">
                             <span>Username</span>
                             <input type="text" name="username" id="username" placeholder="Username">
@@ -40,25 +41,26 @@
                     </div>
                     <div class="signup__content">
                         <div class="uname__container">
-                            <label for="username">
+                            <label for="username-signup">
                                 <span>Username</span>
-                                <small class="input__err">*username is not valid</small>
-                                <input type="text" name="username" id="username" placeholder="Username">
+                                <small class="input__err hide">*username is not valid</small>
+                                <input type="text" name="username" id="username-signup" placeholder="Username">
                             </label>
                             <button class="btn__next" title="next">
+                                <span>next</span>
                                 <img src="/img/right-arrow.svg" width="25" height="25" alt="next" />
                             </button>
                         </div>
                         <div class="pwd__container">
-                            <label for="pwd">
+                            <label for="password">
                                 <span>Password</span>
-                                <small class="input__err">Password should be at least 6 characters</small>
-                                <input type="password" name="pwd" id="pwd" placeholder="Password">
+                                <small class="input__err hide">Password should be at least 6 characters</small>
+                                <input type="password" name="pwd" id="password" placeholder="Password">
                             </label>
                             <label for="cpwd">
                                 <span>Confirm password</span>
-                                <small class="input__err">Password should match</small>
-                                <input type="password" name="cpwd" id="cpwd" placeholder="Confirm password">
+                                <small class="input__err hide">Password should match</small>
+                                <input type="password" name="cpwd" id="cpassword" placeholder="Confirm password">
                             </label>
                             <button class="submit__form_button">Continue</button>
                         </div>
