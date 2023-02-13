@@ -3,8 +3,8 @@ const http = require("http");
 const express = require('express');
 const path = require('path');
 const routes = require('./routes');
-const init = require('./controllers');
-// const dbConnect = require('./libs/dbConnect');
+const { init, errHandler } = require('./controllers');
+const dbConnect = require('./libs/dbConnect');
 const { default: helmet } = require('helmet');
 const cors = require('cors');
 
@@ -21,7 +21,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, "public")))
 app.use(routes);
 
-// dbConnect();
+dbConnect();
 
 io.on("connection", (socket) => {
     console.log("connection established");
@@ -38,6 +38,8 @@ app.use((req, res, next) => {
     req.io = io;
     next();
 });
+
+app.use(errHandler);
 
 server.listen(PORT, () => {
     console.log(`server started on :${PORT}`);

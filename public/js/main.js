@@ -139,7 +139,6 @@ async function login(evt) {
     
     if (isValid) {
         loginErr.classList.add("hide");
-        console.log(uname, pwd, isValid)
         const resp = await fetch('/login', {
             headers: {
                 'Content-Type': 'application/json'
