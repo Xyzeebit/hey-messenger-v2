@@ -1,5 +1,6 @@
 const User = require('../models/userSchema');
 const Messages = require('../models/messagesSchema');
+const jwt = require('jsonwebtoken');
 
 async function checkLoginRequestBody(req, res, next) {
     try {
@@ -18,6 +19,42 @@ async function checkLoginRequestBody(req, res, next) {
     }
 }
 
-async function login(req, res) {
+async function login(req, res, next) {
+    try {
+        const user = await User.findOne({ username: req.body.username.trim() })
+            .populate('messages')
+            .exec();
+        if (user.verifyPassword(req.body.password.trim())) {
+            user.lastSeen = Date.now();
+            await user.save();
 
+            const payload = {
+                id: user._id,
+                username: user.username,
+
+                // Sign token for 1hr
+                exp: Math.floor(Date.now() / 1000) + (60 * 60),
+                issuer: 'heymessenger'
+            };
+            const token = generateToken(payload);
+            req.user = {
+                id: user._id,
+                name: user.name,
+                username: user.username,
+                contacts: user.contacts,
+                isOnline: user.isOnline,
+                photo: user.photo,
+                lastSeen: user.lastSeen,
+            }
+        }
+    } catch (err) {
+        next(err);
+    }
+}
+
+function generateToken(payload) {
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      algorithm: "HS512",
+    });
+    return token;
 }
