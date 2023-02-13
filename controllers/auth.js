@@ -19,7 +19,7 @@ async function checkLoginRequestBody(req, res, next) {
     }
 }
 
-async function login(req, res, next) {
+async function login(req, res) {
     try {
         const user = await User.findOne({ username: req.body.username.trim() })
             .populate('messages')
@@ -31,13 +31,12 @@ async function login(req, res, next) {
             const payload = {
                 id: user._id,
                 username: user.username,
-
                 // Sign token for 1hr
                 exp: Math.floor(Date.now() / 1000) + (60 * 60),
-                issuer: 'heymessenger'
             };
             const token = generateToken(payload);
-            req.user = {
+            
+            const _user = {
                 id: user._id,
                 name: user.name,
                 username: user.username,
@@ -45,10 +44,13 @@ async function login(req, res, next) {
                 isOnline: user.isOnline,
                 photo: user.photo,
                 lastSeen: user.lastSeen,
+                messages: user.messages,
+                isLoggedIn: true,
             }
+            res.status(200).send(_user);
         }
     } catch (err) {
-        next(err);
+        res.status(400).send({ error: "unable to login to account" });
     }
 }
 
