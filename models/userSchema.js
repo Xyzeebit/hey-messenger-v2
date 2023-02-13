@@ -2,21 +2,14 @@ const mongoose = require('mongoose');
 const crypto = require('crypto');
 
 const contactSchema = mongoose.Schema({
-  contactUsername: {
-    type: String,
-  },
+  username: String,
   lastSentMessage: String,
+  lastSeen: Date,
   unRead: Number,
-  chatId: {
-    type: String,
-  }
 });
 
 const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
-  },
+  name: String,
   username: {
     type: String,
     required: [true, "Username cannot be empty"],
@@ -27,7 +20,7 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String
   },
-  profilePhoto: {
+  photo: {
     type: String,
     default: 'avatar.png'
   },
@@ -36,17 +29,13 @@ const userSchema = new mongoose.Schema({
     ref: 'Messages'
   },
   contacts: [contactSchema],
-  link: {
-    type: String,
-    unique: true
-  },
   createdOn: {
     type: Date,
     default: Date.now()
   },
   hash: String,
   salt: String
-})
+});
 
 
 userSchema.methods.setPassword = function(password) {

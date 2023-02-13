@@ -21,10 +21,6 @@ const chatSchema = mongoose.Schema({
 });
 
 const messagesSchema = mongoose.Schema({
-  chatId: {
-    type: String,
-    unique: true
-  },
   messages: [chatSchema],
 }, { collection: 'messages' });
 
