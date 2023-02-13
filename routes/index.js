@@ -9,4 +9,9 @@ router.get("/", (req, res) => {
 router.route('/login')
     .post(auth.checkLoginRequestBody, auth.login);
 
+router.route('/check-username').post(auth.checkSignupUsername);
+router.route('/signup').post(auth.checkSignupPasswords, auth.signUp);
+
+router.get('/logout', auth.signOut);
+
 module.exports = router;

@@ -43,23 +43,24 @@
                         <div class="uname__container">
                             <label for="username-signup">
                                 <span>Choose Username</span>
-                                <small class="input__err hide">*username is not valid</small>
+                                <small class="input__err hide signup__err">*username is not valid</small>
                                 <input type="text" name="username" id="username-signup" placeholder="Username">
                             </label>
-                            <button class="btn__next" title="next">
+                            <button class="btn__next" title="next" disabled>
                                 <span>next</span>
                                 <img src="/img/right-arrow.svg" width="25" height="25" alt="next" />
                             </button>
                         </div>
                         <div class="pwd__container">
+                            <small class="signup__pwd__err input__err">*unable to create account</small>
                             <label for="password">
                                 <span>Password</span>
-                                <small class="input__err hide">Password should be at least 6 characters</small>
+                                <small class="input__err hide password__err>Password should be at least 6 characters</small>
                                 <input type="password" name="pwd" id="password" placeholder="Password">
                             </label>
                             <label for="cpwd">
                                 <span>Confirm password</span>
-                                <small class="input__err hide">Password should match</small>
+                                <small class="input__err hide cpassword__err">Password should match</small>
                                 <input type="password" name="cpwd" id="cpassword" placeholder="Confirm password">
                             </label>
                             <button class="submit__form_button">Continue</button>

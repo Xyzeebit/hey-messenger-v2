@@ -214,6 +214,9 @@ h1.app__title span.shadow {
 .hide {
     display: none;
 }
+.signup__pwd__err {
+    text-align: center;
+}
 
 .signup__content {
     overflow: hidden;

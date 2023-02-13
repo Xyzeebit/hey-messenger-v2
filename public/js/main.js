@@ -27,6 +27,7 @@ window.addEventListener('DOMContentLoaded', function (event) {
     const tabContent = document.querySelector('.tab__content');
     const nextBtn = document.querySelector('button.btn__next');
     const loginBtn = document.querySelector("button.submit__form_button");
+    const usernameInput = document.getElementById("username-signup");
 
     // form.addEventListener("submit", (evt) => {
     //     evt.preventDefault();
@@ -51,6 +52,7 @@ window.addEventListener('DOMContentLoaded', function (event) {
     
     nextBtn.onclick = showPassword;
     loginBtn.onclick = login;
+    usernameInput.onchange = checkUsername;
 
     
 
@@ -153,4 +155,77 @@ async function login(evt) {
             loginErr.classList.remove("hide");
         }
     }
+}
+
+async function checkUsername(evt) {
+    const username = document.getElementById('username-signup').value.trim();
+    const uerr = document.querySelector('.signup__err');
+    const btn = document.querySelector(".btn__next");
+    let isValid = true;
+
+    if (username.length < 6 || username.length > 12) {
+        uerr.innerText = "Username not in range";
+        uerr.classList.remove("hide");
+        btn.setAttribute('disabled', true);
+        isValid = false;
+    }
+
+    if (isValid) {
+        uerr.classList.add("hide");
+        const resp = await fetch("/check-username", {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username }),
+        });
+
+        if (resp.ok) {
+            btn.removeAttribute('disabled');
+        } else {
+            uerr.classList.remove('hide');
+            const msg = await resp.json();
+            uerr.classList.remove("hide");
+            uerr.innerText = msg.error;
+        }
+    }
+}
+
+async function signup(evt) {
+    const signupErr = document.querySelector(".signup__pwd__err");
+    const pwdErr = document.querySelector('.password__err');
+    const cpwdErr = document.querySelector(".cpassword__err");
+    const pwd = document.getElementById('password').value.trim();
+    const cpwd = document.getElementById('cpassword').value.trim();
+    const username = document.getElementById("username-signup").value.trim();
+    const isValid = true;
+    if (pwd.length < 6 || pwd.length > 16) {
+        pwdErr.innerText = "Password should between 6 and 18 characters";
+        pwdErr.classList.remove("hide");
+        isValid = false;
+    }
+    if (cpwd !== pwd) {
+        cpwdErr.classList.remove('hide');
+        isValid = false;
+    }
+
+    if (isValid) {
+        pwdErr.classList.add('hide');
+        cpwdErr.classList.add('hide');
+
+        const resp = await fetch('/signup', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password: pwd, cpassword: cpwd })
+        });
+
+        if (resp.status === 201) {
+            location.href = '/messenger';
+        } else {
+            
+        }
+    }
+
 }

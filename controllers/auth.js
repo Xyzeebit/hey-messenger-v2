@@ -6,16 +6,85 @@ async function checkLoginRequestBody(req, res, next) {
     try {
         const { username, password } = req.body;
         if (username.trim().length < 6)
-            throw ("username must be at least 6 characters");
+            throw new Error("username must be at least 6 characters");
         if (username.trim().length > 12)
-            throw ("username not exceed 12 characters");
+            throw new Error("username should not exceed 12 characters");
         if (password.trim().length < 6)
-            throw ("password must be at least 6 characters");
+            throw new Error("password must be at least 6 characters");
         if (password.trim().length > 32)
-            throw ("password should not exceed 16 characters");
+            throw new Error("password should not exceed 16 characters");
         next();
     } catch (err) {
         next(err);
+    }
+}
+
+async function checkSignupUsername(req, res) {
+    try {
+        const { username } = req.body;
+        if (username.trim().length < 6)
+          throw new Error("username must be at least 6 characters");
+        if (username.trim().length > 12)
+            throw new Error("username should not exceed 12 characters");
+        
+        const user = await User.findOne({ username: username.trim() });
+        if (user)
+            throw new Error("username already taken");
+        return res.status(200).send({ message: "username is available" });
+    } catch (error) {
+        return res.status(409).send({ error: error.message });
+    }
+}
+
+async function checkSignupPasswords(req, res, next) {
+    try {
+        const { password, cpassword } = req.body;
+        if (password.trim().length < 6)
+            throw new Error("password must be at least 6 characters");
+        if (password.trim().length > 32)
+            throw new Error("password should not exceed 16 characters");
+        if (cpassword !== password)
+            throw new Error("passwords do not match");
+        next();
+    } catch (err) {
+        next(err);
+    }
+}
+
+async function signUp(req, res) {
+    try {
+        let user = new User({ username: req.body.username.trim() });
+        user.setPassword(req.body.password.trim());
+        user = await user.save();
+        
+        const expire = Math.floor(Date.now() / 1000) + 60 * 60;
+        const payload = {
+          id: user._id,
+          username: user.username,
+          exp: expire,
+        };
+        const token = generateToken(payload);
+        res.cookie("t", token, { expire });
+        const _user = {
+            token,
+            id: user._id,
+            name: user.name,
+            username: user.username,
+            contacts: user.contacts,
+            isOnline: user.isOnline,
+            photo: user.photo,
+            lastSeen: user.lastSeen,
+            messages: user.messages,
+            isLoggedIn: true,
+        };
+
+
+        res.status(201).send({ user: _user });
+        
+    } catch (err) {
+        return res.status(400).send({
+            error: errorHandler.getErrorMessage(err),
+        });
     }
 }
 
@@ -99,4 +168,8 @@ module.exports = {
     login,
     requireAuthentication,
     hasAuthorization,
+    checkSignupUsername,
+    checkSignupPasswords,
+    signUp,
+    signOut,
 }
