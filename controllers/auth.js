@@ -70,11 +70,11 @@ async function signUp(req, res) {
             id: user._id,
             name: user.name,
             username: user.username,
-            contacts: user.contacts,
+            // contacts: user.contacts,
             isOnline: user.isOnline,
             photo: user.photo,
             lastSeen: user.lastSeen,
-            messages: user.messages,
+            // messages: user.messages,
             isLoggedIn: true,
         };
 
@@ -83,7 +83,7 @@ async function signUp(req, res) {
         
     } catch (err) {
         return res.status(400).send({
-            error: errorHandler.getErrorMessage(err),
+            error: 'cannot create account'
         });
     }
 }
@@ -114,11 +114,11 @@ async function login(req, res) {
             id: user._id,
             name: user.name,
             username: user.username,
-            contacts: user.contacts,
+            // contacts: user.contacts,
             isOnline: user.isOnline,
             photo: user.photo,
             lastSeen: user.lastSeen,
-            messages: user.messages,
+            // messages: user.messages,
             isLoggedIn: true,
         };
         res.status(200).send({ user: _user });
@@ -140,6 +140,14 @@ const signOut = (req, res) => {
         message: "signed out",
     });
 };
+
+const parseCookie = (req, res, next) => {
+    try {
+        const c = req.headers["cookie"];
+    } catch (err) {
+        
+    }
+}
 
 const requireAuthentication = (req, res, next) => {
     try {

@@ -28,6 +28,8 @@ window.addEventListener('DOMContentLoaded', function (event) {
     const nextBtn = document.querySelector('button.btn__next');
     const loginBtn = document.querySelector("button.submit__form_button");
     const usernameInput = document.getElementById("username-signup");
+    const signupBtn = document.querySelector("button.signup__btn");
+
 
     // form.addEventListener("submit", (evt) => {
     //     evt.preventDefault();
@@ -52,6 +54,7 @@ window.addEventListener('DOMContentLoaded', function (event) {
     
     nextBtn.onclick = showPassword;
     loginBtn.onclick = login;
+    signupBtn.onclick = signup;
     usernameInput.onchange = checkUsername;
 
     
@@ -224,7 +227,7 @@ async function signup(evt) {
         if (resp.status === 201) {
             location.href = '/messenger';
         } else {
-            
+            signupErr.classList.remove("hide");
         }
     }
 
