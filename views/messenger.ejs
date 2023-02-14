@@ -4,8 +4,27 @@
         <%- include('./partials/head'); %>
     </head>
     <body>
-        <h1 class="app__title"><span>Hey!</span> Messenger</h1>
-        <h2>Welcome <%= name %> </h2>
-        <p>username: <%= username %> </p>
+        <header>
+            <div class="user__info">
+                <img src="/img/<%= photo %> " alt="<%= username %> " width="50" height="50" />
+                <% if(name)  { %>
+                    <h1><%= name %> </h1>
+                <% } else { %> 
+                    <h1><%= username %></h1>
+                <% } %>
+            </div>
+            <div class="search__bar">
+                <input type="text" id="search-box" name="search">
+                <button>
+                    <img src="/img/icon-search.svg" alt="search" height="25" width="25" />
+                </button>
+            </div>
+        </header>
+
+
+
+        <main>
+            <aside></aside>
+        </main>
     </body>
 </html>

@@ -2,24 +2,26 @@ const User = require('../models/userSchema');
 const Messages = require('../models/messagesSchema');
 
 async function getUserData(username) {
-    try {
-        const u = await User.findOne({ username }).populate('messages').exec();
+    const u = await User.findOne({ username }).populate("messages").exec();
+
+    if (u) {
         return {
             id: u._id,
+            username: u.username,
             name: u.name,
             isOnline: true,
             messages: u.messages,
             contacts: u.contacts,
-        }
-    } catch (error) {
-        console.log(error.message)
+            photo: u.photo,
+        };
     }
+    throw new Error("Access error");
 }
 
 async function messenger(req, res) {
     try {
-        const user = await getUserData(req);
-        res.render('messenger', user)
+        const user = await getUserData(req.session.user.username);
+        res.render('messenger', { ...user });
     } catch (err) {
         res.render('404');
     }

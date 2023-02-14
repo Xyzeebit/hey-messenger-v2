@@ -3,7 +3,7 @@ const router = express.Router();
 const { auth, messaging } = require('../controllers');
 
 router.get("/", (req, res) => {
-    res.render("index");
+    res.render("index", { id: null });
 });
 
 router.route('/login')

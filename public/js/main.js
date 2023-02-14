@@ -1,27 +1,11 @@
 'use strict'
 
 window.addEventListener('DOMContentLoaded', function (event) {
-    const socket = io();
-
-    
-    socket.on("connection", () => {
-        console.log("connected to server");
-    });
-
 
     addHeaderShadow();
     slideInHome();
     getStarted();
 
-
-
-
-
-
-
-
-    // const form = document.getElementById("form");
-    const chats = document.querySelector('.chats');
     const loginTabBtn = document.querySelector('button.login');
     const signupTabBtn = document.querySelector('button.signup');
     const tabContent = document.querySelector('.tab__content');
@@ -30,12 +14,6 @@ window.addEventListener('DOMContentLoaded', function (event) {
     const usernameInput = document.getElementById("username-signup");
     const signupBtn = document.querySelector("button.signup__btn");
 
-
-    // form.addEventListener("submit", (evt) => {
-    //     evt.preventDefault();
-    //     const input = evt.target.chatbox;
-    //     socket.emit('chat', input.value);
-    // });
 
     loginTabBtn.addEventListener('click', function(evt) {
         this.classList.contains('current')
@@ -57,18 +35,7 @@ window.addEventListener('DOMContentLoaded', function (event) {
     signupBtn.onclick = signup;
     usernameInput.onchange = checkUsername;
 
-    
 
-    const send = (sender, text) => {
-        const chat = document.createElement("div");
-        chat.className = sender === "owner" ? "chat__bubble to" : "chat__bubble from";
-        chat.innerText = text;
-        chats.appendChild(chat)
-    }
-
-    socket.on('msg', ({ sender, msg}) => {
-        send(sender, msg)
-    })
 
 });
 
