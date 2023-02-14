@@ -26,6 +26,8 @@ main {
     height: 100vh;
     overflow: hidden;
 }
+
+
 .intro {
     display: flex;
     justify-content: space-around;
@@ -33,6 +35,12 @@ main {
     flex-direction: column;
     height: 50vh;
     overflow: hidden;
+}
+@media screen and (min-width: 861px) {
+    .intro {
+        width: 70vw;
+        margin: 0 auto;
+    }
 }
 h1.app__title {
     font-size: 2.5em;
@@ -72,6 +80,14 @@ h1.app__title span.shadow {
     background-size: cover;
     background-position: center;
 }
+
+@media screen and (min-width: 861px) {
+    .start__button_container {
+        /* width: 70vw; */
+        /* margin: 0 auto; */
+        background-image: url(../img/bg-index-big.jpg);
+    }
+}
 .welcome__text {
     height: 200px;
     overflow: hidden;
@@ -81,6 +97,12 @@ h1.app__title span.shadow {
     text-align: center;
     padding: 2rem;
     font-weight: 500;
+}
+@media screen and (min-width: 861px) {
+    .welcome__text {
+        font-size: 1.3rem;
+        
+    }
 }
 .welcome__text p {
     transform: translateY(400px);
@@ -119,6 +141,19 @@ h1.app__title span.shadow {
     opacity: 0.3;
     
 }
+@media screen and (min-width: 861px) {
+    .intro__forms {
+        flex-direction: row;
+        justify-content: space-around;
+        width: 90vw;
+        padding: 2rem;
+        margin: 0 auto;
+    }
+    .intro__forms img {
+        width: 300px;
+        height: auto;
+    }
+}
 .intro__forms img.slide__in {
     transform: translateY(0px);
     opacity: 1;
@@ -141,10 +176,14 @@ h1.app__title span.shadow {
     outline: none;
     padding: 10px;
     transition: background 500ms;
+    cursor: pointer;
 }
 .tab__bar button.current {
     background: #000;
     color: var(--white);
+}
+.tab__bar button:hover:not(.current) {
+    background: #516ae287;
 }
 .tab__bar button:active {
     background: var(--blue);
@@ -168,6 +207,12 @@ h1.app__title span.shadow {
 }
 .login__content {
     flex-direction: column;
+}
+@media screen and (min-width: 768px) {
+    .login__content {
+        width: 70vw;
+        margin: 0 auto;
+    }
 }
 .login__content label {
     width: 80%;
@@ -223,6 +268,12 @@ h1.app__title span.shadow {
     display: flex;
     justify-items: center;
     align-items: center;
+}
+@media screen and (min-width: 768px) {
+    .signup__content {
+        width: 70vw;
+        margin: 0 auto;
+    }
 }
 .uname__container {
     display: flex;

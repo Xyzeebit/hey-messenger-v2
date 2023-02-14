@@ -204,7 +204,7 @@ async function signup(evt) {
     const username = document.getElementById("username-signup").value.trim();
     const isValid = true;
     if (pwd.length < 6 || pwd.length > 16) {
-        pwdErr.innerText = "Password should between 6 and 18 characters";
+        pwdErr.innerText = "Password should be between 6 and 18 characters";
         pwdErr.classList.remove("hide");
         isValid = false;
     }
