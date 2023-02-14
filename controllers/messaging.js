@@ -1,17 +1,32 @@
-// const User = require('../models/userSchema');
-// const Messages = require('../models/messagesSchema');
+const User = require('../models/userSchema');
+const Messages = require('../models/messagesSchema');
 
-// async function getUser() {
-//     try {
-//         const { messages } = await User.findOne({ username: "donald" }).populate('messages').exec();
-//         console.log(messages);
-//     } catch (error) {
-//         console.log(error.message)
-//     }
-// }
+async function getUserData(username) {
+    try {
+        const u = await User.findOne({ username }).populate('messages').exec();
+        return {
+            id: u._id,
+            name: u.name,
+            isOnline: true,
+            messages: u.messages,
+            contacts: u.contacts,
+        }
+    } catch (error) {
+        console.log(error.message)
+    }
+}
 
-function initSocket(io, socket) {
-    // getUser();
+async function messenger(req, res) {
+    try {
+        const user = await getUserData(req);
+        res.render('messenger', user)
+    } catch (err) {
+        res.render('404');
+    }
+}
+
+function startIO(io, socket) {
+    
     socket.on("rooms", (rooms) => {
         for (let room of rooms) {
             socket.join(room);
@@ -30,4 +45,8 @@ function initSocket(io, socket) {
 
 
 
-module.exports = initSocket;
+
+module.exports = {
+    startIO,
+    messenger,
+}

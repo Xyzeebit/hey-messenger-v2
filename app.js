@@ -3,7 +3,7 @@ const http = require("http");
 const express = require('express');
 const path = require('path');
 const routes = require('./routes');
-const { init, errHandler } = require('./controllers');
+const { messaging, errHandler } = require('./controllers');
 const dbConnect = require('./libs/dbConnect');
 const { default: helmet } = require('helmet');
 const cors = require('cors');
@@ -33,7 +33,7 @@ dbConnect();
 io.on("connection", (socket) => {
     console.log("connection established");
 
-    init(io, socket);
+    messaging.startIO(io, socket);
 
     socket.on("error", (err) => {
         console.log(err.message);

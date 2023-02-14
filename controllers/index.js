@@ -1,9 +1,9 @@
-const init = require('./messaging');
+const messaging = require('./messaging');
 const errHandler = require('./error-handler');
 const auth = require('./auth');
 
 module.exports = {
-    init,
+    messaging,
     errHandler,
     auth,
 }
