@@ -64,7 +64,12 @@ async function signUp(req, res) {
           exp: expire,
         };
         const token = generateToken(payload);
-        res.cookie("t", token, { expire });
+        // res.cookie("t", token, { expire });
+        req.session.user = {
+            t: token,
+            id: user._id,
+            username: user.username,
+        }
         const _user = {
             token,
             id: user._id,
@@ -108,7 +113,12 @@ async function login(req, res) {
           exp: expire,
         };
         const token = generateToken(payload);
-        res.cookie("t", token, { expire });
+        // res.cookie("t", token, { expire });
+        req.session.user = {
+            t: token,
+            id: user._id,
+            username: user.username,
+        };
         const _user = {
             token,
             id: user._id,
@@ -135,23 +145,16 @@ function generateToken(payload) {
 }
 
 const signOut = (req, res) => {
-    res.clearCookie("t");
+    // res.clearCookie("t");
+    req.session = null;
     return res.status(200).send({
         message: "signed out",
     });
 };
 
-const parseCookie = (req, res, next) => {
-    try {
-        const c = req.headers["cookie"];
-    } catch (err) {
-        
-    }
-}
-
 const requireAuthentication = (req, res, next) => {
     try {
-        const user = jwt.verify(req.user.token, process.env.JWT_SECRET);
+        const user = jwt.verify(req.session.user.t, process.env.JWT_SECRET);
         req.auth = user;
         next();
     } catch (err) {
@@ -159,8 +162,16 @@ const requireAuthentication = (req, res, next) => {
     }
 }
 
+const hasSession = async (req, res, next) => {
+    if (req.session && req.session.user && req.session.user.t) {
+        next();
+    } else {
+        res.redirect('/');
+    }
+}
+
 const hasAuthorization = (req, res, next) => {
-    const authorized = req.user && req.auth && req.user.id == req.auth.id;
+    const authorized = req.session.user && req.auth && req.session.user.id == req.auth.id;
     if (!authorized) {
         // return res.status(403).send({
         //     error: "User is not authorized",
@@ -176,6 +187,7 @@ module.exports = {
     login,
     requireAuthentication,
     hasAuthorization,
+    hasSession,
     checkSignupUsername,
     checkSignupPasswords,
     signUp,

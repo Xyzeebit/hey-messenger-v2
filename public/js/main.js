@@ -186,6 +186,7 @@ async function checkUsername(evt) {
         if (resp.ok) {
             btn.removeAttribute('disabled');
         } else {
+            btn.setAttribute('disabled', true);
             uerr.classList.remove('hide');
             const msg = await resp.json();
             uerr.classList.remove("hide");

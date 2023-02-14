@@ -12,9 +12,10 @@ router.route('/login')
 router.route('/check-username').post(auth.checkSignupUsername);
 router.route('/signup').post(auth.checkSignupPasswords, auth.signUp);
 
-router.get('/messenger', (req, res) => {
-    res.send("messages");
-});
+router.route('/messenger')
+    .get(auth.hasSession, auth.requireAuthentication, auth.hasAuthorization, (req, res) => {
+        res.send('<h1>Hey! Messenger</h1>');
+    });
 
 router.get('/logout', auth.signOut);
 
