@@ -32,21 +32,52 @@
             
         </header>
 
-
+        <% 
+            const d = new Date();
+            var contacts = [
+                {
+                    id: "jsdkjskj",
+                    name: "John Doe",
+                    username: "johndoe",
+                    lastSeen: (d.getHours() + ":" + d.getMinutes()),
+                    lastSent: "What is the time for the meeting?",
+                    unRead: 2,
+                    photo: "avatar.png",
+                    isOnline: false,
+                }
+            ];
+        %> 
 
         <main>
             <aside>
                 <ul class="contact__list">
+                    <% for (const contact of contacts) { %> 
                     <li class="contact">
-                        <img src="/img/avatar.png" alt="profile photo" width="50" height="50" />
+                        <div class="img__container">
+                            <% if(contact.isOnline) { %> 
+                                <span class="online"></span>
+                            <% } %> 
+                            <img src="/img/<%= contact.photo %>" alt="<%= contact.username %>" width="50" height="50" />
+                        </div>
                         <div class="name__msg">
-                            <h4>John Doe</h4>
-                            <p>What is the time for the meeting?</p>
+                            <% if (contact.name) { %>
+                                <h4><%= contact.name %></h4>
+                            <% } else { %>
+                                <h4><%= contact.username %></h4>
+                            <% } %>
+                            <p><% if(contact.lastSent) { %> <%= contact.lastSent %> <% } %>  </p>
                         </div>
                         <div class="time__badge">
-                            <span class="badge">9+</span>
-                            <span class="time">08:35</span>
+                            <span class="badge">
+                                <% if(contact.unRead < 10) { %> 
+                                    <%= contact.unRead %> 
+                                <% } else { %> 
+                                    <%= "9+" %> 
+                                <% } %> 
+                            </span>
+                            <span class="time"><%= contact.lastSeen %></span>
                         </div>
+                        <% } %> 
                     </li>
                 </ul>
             </aside>

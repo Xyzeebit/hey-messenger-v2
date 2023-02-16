@@ -158,7 +158,7 @@ const requireAuthentication = (req, res, next) => {
         req.auth = user;
         next();
     } catch (err) {
-        next(err);
+        res.redirect('/');
     }
 }
 
