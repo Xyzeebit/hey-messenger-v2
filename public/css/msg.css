@@ -75,12 +75,12 @@ header {
     display: none;
 }
 
-aside {
+aside.contacts {
     width: 300px;
     /* background: #fff; */
     margin: 1rem;
 }
-aside ul.contact__list {
+aside.contacts ul.contact__list {
     list-style-type: none;
     padding: 0;
 }
@@ -91,10 +91,14 @@ ul.contact__list li.contact {
     border-radius: 10px;
     background: #fff;
     cursor: pointer;
+    transition: transform 300ms;
 }
 li.contact:hover {
     background: var(--blue) !important;
     color: #fff;
+}
+li.contact:active {
+    transform: scale(0.8);
 }
 .img__container {
     position: relative;
@@ -111,6 +115,10 @@ li.contact:hover {
     height: 100%;
     border-radius: 100px;
     clip-path: circle(80%);
+    transition: transform 300ms;
+}
+.contact img:active {
+    transform: scale(1.2);
 }
 
 .img__container .online {
