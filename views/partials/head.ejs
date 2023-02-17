@@ -6,8 +6,9 @@
 <% if(id) { %> 
     <link rel="stylesheet" href="css/msg.css">
 <% } %> 
-<script src="js/main.js"></script>
-<script src="js/socket.io.min.js"></script>
 <% if(id) { %> 
     <script src="js/msg.js"></script>
+    <script src="js/socket.io.min.js"></script>
+<% } else { %> 
+    <script src="js/main.js"></script>
 <% } %> 
