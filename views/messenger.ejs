@@ -43,42 +43,79 @@
                     lastSent: "What is the time for the meeting?",
                     unRead: 2,
                     photo: "avatar.png",
+                    isOnline: true,
+                },
+                {
+                    id: "jsdkhjskj",
+                    name: "John Doe",
+                    username: "johndoe",
+                    lastSeen: (d.getHours() + ":" + d.getMinutes()),
+                    lastSent: "yes",
+                    unRead: 1,
+                    photo: "avatar.png",
+                    isOnline: true,
+                },
+                {
+                    id: "jsdkhj9skj",
+                    name: "John Doe",
+                    username: "johndoe",
+                    lastSeen: (d.getHours() + ":" + d.getMinutes()),
+                    lastSent: "we'll go together",
+                    unRead: 8,
+                    photo: "avatar.png",
+                    isOnline: true,
+                },
+                {
+                    id: "0jsdkhjskj",
+                    name: "John Doe",
+                    username: "johndoe",
+                    lastSeen: (d.getHours() + ":" + d.getMinutes()),
+                    lastSent: "even if I was there, what was I suppose to do?",
+                    unRead: 22,
+                    photo: "avatar.png",
                     isOnline: false,
-                }
+                },
             ];
+            const last = contacts.length - 1;
         %> 
 
         <main>
             <aside>
                 <ul class="contact__list">
                     <% for (const contact of contacts) { %> 
-                    <li class="contact">
-                        <div class="img__container">
-                            <% if(contact.isOnline) { %> 
-                                <span class="online"></span>
-                            <% } %> 
-                            <img src="/img/<%= contact.photo %>" alt="<%= contact.username %>" width="50" height="50" />
-                        </div>
-                        <div class="name__msg">
-                            <% if (contact.name) { %>
-                                <h4><%= contact.name %></h4>
-                            <% } else { %>
-                                <h4><%= contact.username %></h4>
-                            <% } %>
-                            <p><% if(contact.lastSent) { %> <%= contact.lastSent %> <% } %>  </p>
-                        </div>
-                        <div class="time__badge">
-                            <span class="badge">
-                                <% if(contact.unRead < 10) { %> 
-                                    <%= contact.unRead %> 
-                                <% } else { %> 
-                                    <%= "9+" %> 
+                        <li class="contact">
+                            <div class="img__container">
+                                <% if(contact.isOnline) { %> 
+                                    <span class="online"></span>
                                 <% } %> 
-                            </span>
-                            <span class="time"><%= contact.lastSeen %></span>
-                        </div>
+                                <img src="/img/<%= contact.photo %>" alt="<%= contact.username %>" width="50" height="50" />
+                            </div>
+                            <div class="name__msg">
+                                <% if (contact.name) { %>
+                                    <h4><%= contact.name %></h4>
+                                <% } else { %>
+                                    <h4><%= contact.username %></h4>
+                                <% } %>
+                                <p><% if(contact.lastSent) { %> <%= contact.lastSent %> <% } %>  </p>
+                            </div>
+                            <div class="time__badge">
+                                <span class="badge">
+                                    <% if(contact.unRead < 10) { %> 
+                                        <%= contact.unRead %> 
+                                    <% } else { %> 
+                                        <%= "9+" %> 
+                                    <% } %> 
+                                </span>
+                                <span class="time"><%= contact.lastSeen %></span>
+                            </div>
+                        </li>
+                        <% if(contact.id !== contacts[last].id) {%> 
+                            <div class="contact__divider">
+                                <div id="a0001"></div>
+                                <div id="a0002"></div>
+                            </div>
                         <% } %> 
-                    </li>
+                    <% } %> 
                 </ul>
             </aside>
         </main>

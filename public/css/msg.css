@@ -6,7 +6,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
-    background: var(--bg);
+    background: #000;
     
 }
 
@@ -14,6 +14,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    color: var(--white);
 }
 .user__info img {
     border-radius: 100px;
@@ -89,6 +90,11 @@ ul.contact__list li.contact {
     align-items: center;
     border-radius: 10px;
     background: #fff;
+    cursor: pointer;
+}
+li.contact:hover {
+    background: var(--blue) !important;
+    color: #fff;
 }
 .img__container {
     position: relative;
@@ -163,4 +169,24 @@ ul.contact__list li.contact {
     font-size: 0.8rem;
     font-weight: 300;
     padding-top: 0.5rem;
+}
+.contact__divider {
+    width: 100%;
+    height: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact__divider #a0001 {
+    width: 40%;
+    height: 5px;
+    background: var(--white);
+    transform: translateX(20px);
+    border: 1px solid var(--primary);
+}
+.contact__divider #a0002 {
+    width: 60%;
+    height: 5px;
+    background: var(--primary);
 }
