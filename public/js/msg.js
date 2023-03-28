@@ -45,15 +45,46 @@ const enableSendButton = evt => {
 
 const sendMessage = evt => {
     const input = document.querySelector(".input__area");
-    const span = Object.assign(document.createElement("span"), {
-        className: "to chat__bubble",
-        innerText: input.value,
-    });
-    const messageList = document.querySelector('.message__list');
-    messageList.appendChild(span);
+    // const span = Object.assign(document.createElement("span"), {
+    //     className: "to chat__bubble",
+    //     innerText: input.value,
+    // });
+    // const messageList = document.querySelector('.message__list');
+    // messageList.appendChild(span);
+    const user = document.querySelector('.app__user').innerText.replace('@', '');
+    const msg = {
+        message: input.value,
+        time: Date.now(),
+        from: 'donald'
+    }
+    console.log(user)
+    addMessage(msg, user);
     input.value = '';
+    scrollToBottom();
+}
+
+function addMessage(msg, user) {
+    const { message, time, from } = msg;
+    const span = Object.assign(document.createElement("span"), {
+      className: `${from === user ? "to" : "from"} chat__bubble`,
+      style: `display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+        `,
+        innerHTML: `<span class="">${message}</span>
+            <span class="chat__time">${new Intl.DateTimeFormat(
+        "en-US",
+        {
+          hour: "numeric",
+          minute: "numeric",
+        }
+      ).format(time)}</span>`,
+    });
+    const messageList = document.querySelector(".message__list");
+    messageList.appendChild(span);
 }
 
 const scrollToBottom = () => {
-    
+    const messageList = document.querySelector(".message__list");
+    messageList.scrollTop = messageList.scrollHeight;
 }

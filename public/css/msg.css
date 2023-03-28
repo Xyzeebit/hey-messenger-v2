@@ -1,6 +1,9 @@
 body {
     background: var(--primary);
 }
+* {
+    scroll-behavior: smooth;
+}
 main {
     display: flex;
     justify-content: space-between;
@@ -356,4 +359,9 @@ li.contact:active {
     background: var(--blue);
     color: #fff;
     border-radius: 0 10px 10px 10px;
+}
+.chat__time {
+    font-size: 0.5rem;
+    color: var(--gray);
+    margin-top: 0.3rem;
 }
