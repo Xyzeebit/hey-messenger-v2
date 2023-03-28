@@ -226,6 +226,7 @@ li.contact:active {
     padding: 1rem;
     position: absolute;
     bottom: 0;
+    background: var(--primary);
 }
 .input__area_container {
     width: 85%;
@@ -273,6 +274,16 @@ li.contact:active {
 .btn__send:active:not(:disabled) {
     transform: scale(0.8);
     
+}
+
+.message__list {
+    /* height: 90%; */
+    overflow: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 100px;
 }
 
 .chats {

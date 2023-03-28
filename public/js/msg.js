@@ -33,7 +33,11 @@ window.addEventListener('DOMContentLoaded', function (event) {
 
 const handleChatInput = (evt) => {
     evt.target.style.height = "1px";
-    evt.target.style.height = evt.target.scrollHeight + "px";
+    if(evt.target.scrollHeight >= 200) {
+        evt.target.style.height = 200 + "px";
+    } else {
+        evt.target.style.height = evt.target.scrollHeight + "px";
+    }
 }
 
 const enableSendButton = evt => {
