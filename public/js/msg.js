@@ -16,11 +16,15 @@ window.addEventListener('DOMContentLoaded', function (event) {
     // component selectors
     const textarea = document.querySelector('.input__area');
     const sendBtn = document.querySelector('.btn__send');
+    // const contactList = document.querySelector('.contact__list');
+    const contacts = document.querySelectorAll('.contact');
 
     // component event listeners
     sendBtn.addEventListener('click', sendMessage);
     textarea.addEventListener('keyup', handleChatInput);
     textarea.addEventListener('keyup', enableSendButton);
+    // contactList.addEventListener('click', selectContact);
+    contacts.forEach(contact => contact.addEventListener('click', selectContact));
 
     
 });
@@ -49,7 +53,7 @@ const sendMessage = evt => {
     const msg = {
         message: input.value,
         time: Date.now(),
-        from: 'donald'
+        from: user,
     }
 
     addMessage(msg, user);
@@ -86,6 +90,71 @@ const scrollToBottom = () => {
     messageList.scrollTop = messageList.scrollHeight;
 }
 
-const selectContact = evt => {
-    
+async function selectContact(evt) {
+    const [_, username] = this.children[this.children.length - 1].value.split(':');
+    document.querySelector('.chat__window').style.display = 'block';
+    const user = document
+      .querySelector(".app__user")
+      .innerText.replace("@", "");
+
+    // const messages = await fetchMessages(username);
+    const messages = await fetchMessagesMock('peters');
+
+    if (messages && messages.length > 0) {
+        messages.forEach(message => addMessage(message, user));
+    } else {
+
+    }
+
+}
+
+async function fetchMessages(username) {
+    const resp = await fetch('/messages', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username }),
+    });
+    if (resp.ok) {
+        const messages = await resp.json();
+        return messages;
+    } else {
+        return;
+    }
+}
+
+async function fetchMessagesMock(username) {
+    return [
+        {
+            message: "how are your?",
+            time: Date.now() - 2000,
+            from: "donald",
+            to: "peters",
+        },
+        {
+            message: "how are your again?",
+            time: Date.now() - 1000,
+            from: "donald",
+            to: "peters",
+        },
+        {
+            message: "I'm fine",
+            time: Date.now(),
+            from: username,
+            to: "donald",
+        },
+        {
+            message: "how is your work",
+            time: Date.now() + 1000,
+            from: "donald",
+            to: "peters",
+        },
+        {
+            message: "we are doing great",
+            time: Date.now() + 2000,
+            from: username,
+            to: "donald",
+        },
+    ];
 }

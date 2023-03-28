@@ -219,7 +219,7 @@ li.contact:active {
 .chat__window {
     width: 55vw;
     height: 80vh;
-    /* border: 1px solid #000; */
+    display: none;
     margin: 1rem;
     position: sticky;
     position: -webkit-sticky;
@@ -369,6 +369,6 @@ li.contact:active {
 }
 .chat__time {
     font-size: 0.5rem;
-    color: var(--gray);
+    color: #383636;
     margin-top: 0.3rem;
 }

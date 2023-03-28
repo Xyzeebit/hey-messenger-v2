@@ -108,6 +108,7 @@
                                 </span>
                                 <span class="time"><%= contact.lastSeen %></span>
                             </div>
+                            <input type="hidden" value="<%= contact.name ? contact.name : '@' %>:<%= contact.username %> ">
                         </li>
                         <% if(contact.id !== contacts[last].id) {%> 
                             <div class="contact__divider">
@@ -133,24 +134,7 @@
                 <div class="chats__container">
                     <div class="text__chat">
                         <div class="message__list chats">
-                            <span class="chat__bubble from">Hello, how are you</span>
-                            <span class="to chat__bubble">I'm fine and you?</span>
-                            <span class="chat__bubble from">Hello, how are you</span>
-                            <span class="to chat__bubble">I'm fine and you?</span>
-                            <span class="chat__bubble from">Hello, how are you</span>
-                            <span class="to chat__bubble">I'm fine and you?</span>
-                            <span class="chat__bubble from">Hello, how are you</span>
-                            <span class="to chat__bubble">I'm fine and you?</span>
-                            <span class="chat__bubble from">Hello, how are you</span>
-                            <span class="to chat__bubble">I'm fine and you?</span>
-                            <span class="chat__bubble from">Hello, how are you</span>
-                            <span class="to chat__bubble">I'm fine and you?</span>
-                            <span class="chat__bubble from">Hello, how are you</span>
-                            <span class="to chat__bubble">I'm fine and you?</span>
-                            <span class="chat__bubble from">Hello, how are you</span>
-                            <span class="to chat__bubble">I'm fine and you?</span>
-                            <span class="chat__bubble from">Hello, how are you</span>
-                            <span class="to chat__bubble">I'm fine and you?</span>
+                            
                         </div>
                     </div>
                 </div>
