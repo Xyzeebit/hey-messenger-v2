@@ -45,21 +45,17 @@ const enableSendButton = evt => {
 
 const sendMessage = evt => {
     const input = document.querySelector(".input__area");
-    // const span = Object.assign(document.createElement("span"), {
-    //     className: "to chat__bubble",
-    //     innerText: input.value,
-    // });
-    // const messageList = document.querySelector('.message__list');
-    // messageList.appendChild(span);
     const user = document.querySelector('.app__user').innerText.replace('@', '');
     const msg = {
         message: input.value,
         time: Date.now(),
         from: 'donald'
     }
-    console.log(user)
+
     addMessage(msg, user);
     input.value = '';
+    const sendBtn = document.querySelector(".btn__send");
+    sendBtn.setAttribute("disabled", true);
     scrollToBottom();
 }
 
@@ -76,7 +72,8 @@ function addMessage(msg, user) {
         "en-US",
         {
           hour: "numeric",
-          minute: "numeric",
+            minute: "numeric",
+          timeStyle: 'short',
         }
       ).format(time)}</span>`,
     });

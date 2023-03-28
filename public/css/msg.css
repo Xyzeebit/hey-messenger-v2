@@ -1,5 +1,9 @@
 body {
-    background: var(--primary);
+    /* background: var(--primary); */
+    background-image: url(/img/bg-index-big.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 * {
     scroll-behavior: smooth;
@@ -215,7 +219,7 @@ li.contact:active {
 .chat__window {
     width: 55vw;
     height: 80vh;
-    border: 1px solid #000;
+    /* border: 1px solid #000; */
     margin: 1rem;
     position: sticky;
     position: -webkit-sticky;
@@ -283,7 +287,10 @@ li.contact:active {
     top: 0;
     left: 0;
     right: 0;
-    background: #000;
+    /* background: #000;
+     */
+     background: linear-gradient(45deg, #000000a5, #666666c1);
+    /* background: var(--primary); */
     display: flex;
     justify-content: flex-start;
     align-items: center;
