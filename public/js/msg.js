@@ -85,3 +85,7 @@ const scrollToBottom = () => {
     const messageList = document.querySelector(".message__list");
     messageList.scrollTop = messageList.scrollHeight;
 }
+
+const selectContact = evt => {
+    
+}
