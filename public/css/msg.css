@@ -273,14 +273,61 @@ li.contact:active {
 }
 .btn__send:active:not(:disabled) {
     transform: scale(0.8);
-    
+}
+
+.title__bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #000;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.name__icon {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 40%;
+}
+
+.close__chat_button {
+    background: none;
+    outline: none;
+    border: none;
+    transition: transform 0.3s;
+}
+.close__chat_button img {
+    filter: invert(1);
+    transform: rotate(-180deg);
+}
+.close__chat_button:active {
+    transform: scale(0.8);
+}
+
+@media screen and (min-width: 768px) {
+    .close__chat_button {
+        display: none;
+    }
+}
+
+.name__icon img {
+    margin-left: 0.5rem;
+    border-radius: 100px;
+}
+.name__icon h4 {
+    color: #fff;
+    padding-left: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    /* text-overflow: ellipsis; */
 }
 
 .message__list {
-    /* height: 90%; */
     overflow: auto;
     position: absolute;
-    top: 0;
+    top: 66px;
     left: 0;
     right: 0;
     bottom: 100px;
