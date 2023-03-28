@@ -380,26 +380,3 @@ h1.app__title span.shadow {
     border: 2px solid #000;
     padding: 10px;
 } */
-.chats {
-    display: flex;
-    flex-direction: column;
-}
-.chat__bubble {
-    padding: 10px;
-    margin-top: 5px;
-    width: fit-content;
-}
-.to {
-    background: #e7e7dd;
-    border-radius: 10px 0 10px 10px;
-    justify-self: flex-start;
-    align-self: flex-end;
-}
-.from {
-    background: #68c4db;
-    border-radius: 0 10px 10px 10px;
-}
-
-/* form {
-    margin-top: 10px; */
-/* } */
