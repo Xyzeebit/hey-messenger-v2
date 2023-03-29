@@ -84,11 +84,12 @@
                 <ul class="contact__list">
                     <% for (const contact of contacts) { %> 
                         <li class="contact">
+                            <% const imgUrl = '/img/' + contact.photo %> 
                             <div class="img__container">
                                 <% if(contact.isOnline) { %> 
                                     <span class="online"></span>
                                 <% } %> 
-                                <img src="/img/<%= contact.photo %>" alt="<%= contact.username %>" width="50" height="50" />
+                                <img src="<%= imgUrl %>" alt="<%= contact.username %>" width="50" height="50" />
                             </div>
                             <div class="name__msg">
                                 <% if (contact.name) { %>
@@ -108,7 +109,7 @@
                                 </span>
                                 <span class="time"><%= contact.lastSeen %></span>
                             </div>
-                            <input type="hidden" value="<%= contact.name ? contact.name : '@' %>:<%= contact.username %>:/img/<%= contact.photo %>">
+                            <input type="hidden" value="<%= contact.name ? contact.name : '@' %>:<%= contact.username %>:<%= imgUrl %>">
                         </li>
                         <% if(contact.id !== contacts[last].id) {%> 
                             <div class="contact__divider">
@@ -128,7 +129,7 @@
                             <img src="/img/right-arrow.svg" alt="close chat" width="25" height="25">
                         </button>
                         <img src="/img/avatar.png" alt="username" width="50" height="50">
-                        <h4>username username username username</h4>
+                        <h4></h4>
                     </div>
                 </div>
                 <div class="chats__container">
