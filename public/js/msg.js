@@ -91,14 +91,17 @@ const scrollToBottom = () => {
 }
 
 async function selectContact(evt) {
-    const [_, username] = this.children[this.children.length - 1].value.split(':');
+    const [name, username, imgSrc] = this.children[this.children.length - 1].value.split(':');
     document.querySelector('.chat__window').style.display = 'block';
     const user = document
       .querySelector(".app__user")
       .innerText.replace("@", "");
-
+    const [_, img, h4] = document.querySelector(".name__icon").children;
+    img.src = imgSrc;
+    img.setAttribute('alt', username);
+    h4.innerText = name.trim() === '@' ? username : name;
     // const messages = await fetchMessages(username);
-    const messages = await fetchMessagesMock('peters');
+    const messages = await fetchMessages('peters');
 
     if (messages && messages.length > 0) {
         messages.forEach(message => addMessage(message, user));
@@ -119,8 +122,20 @@ async function fetchMessages(username) {
     if (resp.ok) {
         const messages = await resp.json();
         return messages;
-    } else {
-        return;
+    }
+}
+
+async function addMessage(data) {
+    const resp = await fetch('/messages/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+    if (resp.ok) {
+        const text = await resp.json();
+        return text;
     }
 }
 

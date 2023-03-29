@@ -108,7 +108,7 @@
                                 </span>
                                 <span class="time"><%= contact.lastSeen %></span>
                             </div>
-                            <input type="hidden" value="<%= contact.name ? contact.name : '@' %>:<%= contact.username %> ">
+                            <input type="hidden" value="<%= contact.name ? contact.name : '@' %>:<%= contact.username %>:/img/<%= contact.photo %>">
                         </li>
                         <% if(contact.id !== contacts[last].id) {%> 
                             <div class="contact__divider">
