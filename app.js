@@ -33,7 +33,9 @@ dbConnect();
 io.on("connection", (socket) => {
     console.log("connection established");
 
-    messaging.startIO(io, socket);
+    messaging.startIO(io, socket).then(() => {
+        
+    });
 
     socket.on("error", (err) => {
         console.log(err.message);

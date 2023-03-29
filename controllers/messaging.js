@@ -51,16 +51,23 @@ async function messages(req, res) {
 }
 
 
-function startIO(io, socket) {
+async function startIO(io, socket) {
     
     socket.on("rooms", (rooms) => {
+        console.log(rooms)
         for (let room of rooms) {
             socket.join(room);
         }
     });
 
-    socket.on("is online", (username) => {
-        socket.broadcast.emit("is online", username);
+    socket.on("is online", (data) => {
+        socket.broadcast.emit("is online",
+            {
+                id: data.id,
+                username: data.username,
+                online: data.online
+            }
+        );
     });
 
     socket.on("my chat", (msg) => {

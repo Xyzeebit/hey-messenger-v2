@@ -11,6 +11,14 @@ window.addEventListener('DOMContentLoaded', function (event) {
         console.log(msg)
     });
 
+    socket.on('is online', checkOnlineUsers);
+
+    //Broadcast that this user is online
+    setInterval(() => {
+        const user = document.querySelector('.app__user').innerText.replace('@', '');
+        socket.emit("is online", { id: user, username: user, online: true });
+    }, 30000);
+
 
 
     // component selectors
@@ -125,20 +133,38 @@ async function fetchMessages(username) {
     }
 }
 
-async function addMessage(data) {
-    const resp = await fetch('/messages/add', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    });
-    if (resp.ok) {
-        const text = await resp.json();
-        console.log(text)
-        return text;
+function chat(chat, socket) {
+    socket.emit('my chat', chat);
+}
+
+function createChatIds() {
+
+}
+
+// find online users and notify this user
+function checkOnlineUsers({ id, username, online }) {
+    if (online) {
+        const [imgContainer] = document.getElementById(id).children;
+        const span = document.createElement('span');
+        span.setAttribute('class', 'online');
+        imgContainer.prepend(span);
     }
 }
+
+// async function addMessage(data) {
+//     const resp = await fetch('/messages/add', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify(data),
+//     });
+//     if (resp.ok) {
+//         const text = await resp.json();
+//         console.log(text)
+//         return text;
+//     }
+// }
 
 async function fetchMessagesMock(username) {
     return [
