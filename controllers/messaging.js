@@ -30,12 +30,16 @@ async function messenger(req, res) {
 
 async function messages(req, res) {
     try {
-        const { username, messages } = await getUser(req.session.user.username);
+        const { messages } = await getUser(req.session.user.username);
         if (req.body.hasProperty('username')) {
             const msgs = messages.filter(
               (msg) =>
-                msg.from === username || msg.to === req.session.user.username
+                msg.from === req.session.user.username && msg.to === req.body.username.trim() ||
+                msg.to === req.body.username.trim() && msg.from === req.session.user.username
             );
+            res.status(200).send({ messages: msgs });
+        } else {
+            res.status(401).send({ error: 'missing property in request body' });
         }
     } catch (error) {
         res.status(404).send({ error: 'user not found' });
@@ -67,4 +71,5 @@ function startIO(io, socket) {
 module.exports = {
     startIO,
     messenger,
+    messages
 }

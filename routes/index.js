@@ -15,6 +15,9 @@ router.route('/signup').post(auth.checkSignupPasswords, auth.signUp);
 router.route('/messenger')
     .get(auth.hasSession, auth.requireAuthentication, auth.hasAuthorization, messaging.messenger);
 
+router.route('/messages')
+    .post(auth.hasSession, auth.requireAuthentication, auth.hasAuthorization, messaging.messages);
+    
 router.get('/logout', auth.signOut);
 
 module.exports = router;
