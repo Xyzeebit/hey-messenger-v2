@@ -2,15 +2,15 @@ const User = require('../models/userSchema');
 const Messages = require('../models/messagesSchema');
 
 async function getUser(username) {
-    const u = await User.findOne({ username }).populate("messages").exec();
-
+    const u = await User.findOne({ username }).populate("messages");
+    
     if (u) {
         return {
             id: u._id,
             username: u.username,
             name: u.name,
             isOnline: true,
-            messages: u.messages,
+            messages: u.messages || [],
             contacts: u.contacts,
             photo: u.photo,
             lastSeen: u.lastSeen,
@@ -30,16 +30,20 @@ async function messenger(req, res) {
 
 async function messages(req, res) {
     try {
-        const { messages } = await getUser(req.session.user.username);
-        if (req.body.hasProperty('username')) {
+        const { username, messages } = await getUser(req.session.user.username);
+        console.log(username, messages)
+        if (req.body.username) {
             const msgs = messages.filter(
               (msg) =>
-                msg.from === req.session.user.username && msg.to === req.body.username.trim() ||
-                msg.to === req.body.username.trim() && msg.from === req.session.user.username
+                (msg.from === req.session.user.username &&
+                  msg.to === req.body.username.trim()) ||
+                (msg.to === req.session.user.username &&
+                  msg.from === req.body.username.trim())
             );
+            console.log(msgs)
             res.status(200).send({ messages: msgs });
         } else {
-            res.status(401).send({ error: 'missing property in request body' });
+            res.status(400).send({ error: 'missing property in request body' });
         }
     } catch (error) {
         res.status(404).send({ error: 'user not found' });

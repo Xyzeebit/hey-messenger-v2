@@ -5,13 +5,13 @@ const jwt = require('jsonwebtoken');
 async function checkLoginRequestBody(req, res, next) {
     try {
         const { username, password } = req.body;
-        if (username.trim().length < 6)
+        if (username === undefined || username.trim().length < 6)
             throw new Error("username must be at least 6 characters");
-        if (username.trim().length > 12)
+        if (username && username.trim().length > 12)
             throw new Error("username should not exceed 12 characters");
-        if (password.trim().length < 6)
+        if (password === undefined || password.trim().length < 6)
             throw new Error("password must be at least 6 characters");
-        if (password.trim().length > 32)
+        if (password && password.trim().length > 32)
             throw new Error("password should not exceed 16 characters");
         next();
     } catch (err) {
@@ -152,7 +152,7 @@ const signOut = (req, res) => {
     });
 };
 
-const requireAuthentication = (req, res, next) => {
+const requireAuthentication = async (req, res, next) => {
     try {
         const user = jwt.verify(req.session.user.t, process.env.JWT_SECRET);
         req.auth = user;
@@ -170,7 +170,7 @@ const hasSession = async (req, res, next) => {
     }
 }
 
-const hasAuthorization = (req, res, next) => {
+const hasAuthorization = async (req, res, next) => {
     const authorized = req.session.user && req.auth && req.session.user.id == req.auth.id;
     if (!authorized) {
         // return res.status(403).send({

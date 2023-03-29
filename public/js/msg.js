@@ -101,8 +101,8 @@ async function selectContact(evt) {
     img.setAttribute('alt', username);
     h4.innerText = name.trim() === '@' ? username : name;
     
-    const messages = await fetchMessages(user); // change to username
-    console.log(messages)
+    const messages = await fetchMessages(username);
+    
     if (messages && messages.length > 0) {
         messages.forEach(message => addMessage(message, user));
     } else {
@@ -135,6 +135,7 @@ async function addMessage(data) {
     });
     if (resp.ok) {
         const text = await resp.json();
+        console.log(text)
         return text;
     }
 }
