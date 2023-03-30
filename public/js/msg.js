@@ -1,5 +1,6 @@
 'use strict'
 
+const onlineUsers = [];
 window.addEventListener('DOMContentLoaded', function (event) {
     const socket = io();
 
@@ -18,6 +19,10 @@ window.addEventListener('DOMContentLoaded', function (event) {
         const user = document.querySelector('.app__user').innerText.replace('@', '');
         socket.emit("is online", { id: user, username: user, online: true });
     }, 30000);
+
+    setTimeout(() => {
+        createChatIds(socket);
+    }, 10000);
 
 
 
@@ -137,17 +142,28 @@ function chat(chat, socket) {
     socket.emit('my chat', chat);
 }
 
-function createChatIds() {
-
+function createChatIds(socket) {
+    const contactElements = document.querySelector('.contact__list');
+    let contacts = [];
+    for (let contact of contactElements.children) {
+        if (contact.id) {
+            contacts.push(contact.id.trim());
+        }
+    }
+    socket.emit('rooms', contacts)
 }
 
 // find online users and notify this user
 function checkOnlineUsers({ id, username, online }) {
     if (online) {
-        const [imgContainer] = document.getElementById(id).children;
-        const span = document.createElement('span');
-        span.setAttribute('class', 'online');
-        imgContainer.prepend(span);
+        const contact = document.getElementById(id);
+        if (contact && onlineUsers.indexOf(username) === -1) {
+            const [imgContainer] = contact.children;
+            const span = document.createElement("span");
+            span.setAttribute("class", "online");
+            imgContainer.prepend(span);
+            onlineUsers.push(username);
+        }
     }
 }
 

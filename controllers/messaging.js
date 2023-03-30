@@ -40,7 +40,7 @@ async function messages(req, res) {
                 (msg.to === req.session.user.username &&
                   msg.from === req.body.username.trim())
             );
-            console.log(msgs)
+            // console.log(msgs)
             res.status(200).send({ messages: msgs });
         } else {
             res.status(400).send({ error: 'missing property in request body' });
@@ -51,7 +51,7 @@ async function messages(req, res) {
 }
 
 
-async function startIO(io, socket) {
+function startIO(io, socket) {
     
     socket.on("rooms", (rooms) => {
         console.log(rooms)
@@ -71,7 +71,7 @@ async function startIO(io, socket) {
     });
 
     socket.on("my chat", (msg) => {
-        io.to(msg.chatId).emit("my chat", msg);
+        io.to(msg.username).emit("my chat", msg);
     });
 
 }

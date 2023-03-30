@@ -104,6 +104,7 @@ async function login(req, res) {
             return res.status(401).send({ error: "Invalid username or password" });
         }
         user.lastSeen = Date.now();
+        user.isOnline = true;
         await user.save();
         // Sign token for 1hr
         const expire = Math.floor(Date.now() / 1000) + 60 * 60;
@@ -144,12 +145,21 @@ function generateToken(payload) {
     return token;
 }
 
-const signOut = (req, res) => {
+const signOut = async (req, res) => {
     // res.clearCookie("t");
-    req.session = null;
-    return res.status(200).send({
-        message: "signed out",
-    });
+    try {
+        await User.findOneAndUpdate({ username: req.session.user.username }, { isOnline: false });
+        req.session = null;
+        return res.status(200).send({
+            message: "signed out",
+        });
+    } catch (error) {
+        req.session = null;
+        return res.status(200).send({
+            message: "signed out",
+        });
+    }
+    
 };
 
 const requireAuthentication = async (req, res, next) => {
