@@ -92,7 +92,6 @@ const mockMsgs = [
 function startIO(io, socket) {
     
     socket.on("rooms", (rooms) => {
-        console.log(rooms)
         for (let room of rooms) {
             socket.join(room);
         }
@@ -109,7 +108,8 @@ function startIO(io, socket) {
     });
 
     socket.on("my msg", (msg) => {
-        io.to(msg.username).emit("my msg", msg);
+        mockMsgs.push(msg);
+        io.to(msg.to).emit("my msg", msg);
     });
 
 }

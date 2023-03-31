@@ -1,8 +1,11 @@
 'use strict'
 
 const onlineUsers = [];
+let socket;
+let currentSelectedContact;
+let chatMessages = [];
 window.addEventListener('DOMContentLoaded', function (event) {
-    const socket = io();
+    socket = io();
     const user = document.querySelector('.app__user').innerText.replace('@', '');
 
     socket.on("connection", () => {
@@ -10,9 +13,13 @@ window.addEventListener('DOMContentLoaded', function (event) {
     });
 
     socket.on("my msg", (msg) => {
-        console.log(msg)
+        console.log('my chat', msg)
         // ..add message
-        addMessage(msg, user);
+        // addMessage(msg, user);
+        if (msg.from !== user) {
+            addMessage(msg, user);
+            //..Notify user
+        }
     });
 
     socket.on('is online', checkOnlineUsers);
@@ -23,7 +30,7 @@ window.addEventListener('DOMContentLoaded', function (event) {
     }, 30000);
 
     setTimeout(() => {
-        createChatIds(socket);
+        createChatIds();
     }, 10000);
 
 
@@ -65,39 +72,39 @@ const enableSendButton = evt => {
 const sendMessage = evt => {
     const input = document.querySelector(".input__area");
     const user = document.querySelector('.app__user').innerText.replace('@', '');
+    const time = Date.now();
     const msg = {
-        message: input.value,
-        time: Date.now(),
+        id: time,
         from: user,
-    }
-
+        to: currentSelectedContact,
+        message: input.value,
+        time,
+        read: false,
+    };
+    socket.emit('my msg', msg);
     addMessage(msg, user);
     input.value = '';
+    input.style.height = '10px';
     const sendBtn = document.querySelector(".btn__send");
     sendBtn.setAttribute("disabled", true);
-    scrollToBottom();
 }
 
 function addMessage(msg, user) {
-    const { message, time, from, to } = msg;
+    const { id, message, time, from, to } = msg;
     const span = Object.assign(document.createElement("span"), {
-      className: `${from === user ? "to" : "from"} chat__bubble`,
+        className: `${from === user ? "to" : "from"} chat__bubble`,
+        id: id,
       style: `display: flex;
             justify-content: space-between;
             flex-direction: column;
         `,
         innerHTML: `<span class="">${message}</span>
-            <span class="chat__time">${new Intl.DateTimeFormat(
-        "en-US",
-        {
-          hour: "numeric",
-            minute: "numeric",
-          timeStyle: 'short',
-        }
-      ).format(time)}</span>`,
+            <span class="chat__time">${new Intl.DateTimeFormat("en-US",
+                { timeStyle: 'short' }).format(time)}</span>`,
     });
     const messageList = document.querySelector(".message__list");
     messageList.appendChild(span);
+    scrollToBottom();
 }
 
 const scrollToBottom = () => {
@@ -107,6 +114,7 @@ const scrollToBottom = () => {
 
 function selectContact(evt) {
     const [name, username, imgSrc] = this.children[this.children.length - 1].value.split(':');
+    currentSelectedContact = username;
     document.querySelector('.chat__window').style.display = 'block';
     const user = document
       .querySelector(".app__user")
@@ -125,7 +133,6 @@ function selectContact(evt) {
         const messages = fetchMessages(username);
         resolve(messages);
     }).then((messages) => {
-        console.log(messages)
         messages.forEach((message) => addMessage(message, user));
     });
 
@@ -145,11 +152,7 @@ async function fetchMessages(username) {
     }
 }
 
-function chat(chat, socket) {
-    socket.emit('my chat', chat);
-}
-
-function createChatIds(socket) {
+function createChatIds() {
     const contactElements = document.querySelector('.contact__list');
     let contacts = [];
     for (let contact of contactElements.children) {

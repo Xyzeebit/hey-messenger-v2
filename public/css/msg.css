@@ -353,6 +353,8 @@ li.contact:active {
     padding: 10px;
     margin-top: 5px;
     width: fit-content;
+    width: -moz-fit-content;
+    width: -webkit-fit-content;
 }
 
 .to {
