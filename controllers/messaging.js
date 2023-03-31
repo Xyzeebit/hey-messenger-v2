@@ -31,9 +31,9 @@ async function messenger(req, res) {
 async function messages(req, res) {
     try {
         const { username, messages } = await getUser(req.session.user.username);
-        console.log(username, messages)
+        // console.log(username, messages)
         if (req.body.username) {
-            const msgs = messages.filter(
+            const msgs = mockMsgs.filter(
               (msg) =>
                 (msg.from === req.session.user.username &&
                   msg.to === req.body.username.trim()) ||
@@ -41,7 +41,7 @@ async function messages(req, res) {
                   msg.from === req.body.username.trim())
             );
             // console.log(msgs)
-            res.status(200).send({ messages: msgs });
+            res.status(200).send(msgs);
         } else {
             res.status(400).send({ error: 'missing property in request body' });
         }
@@ -49,6 +49,44 @@ async function messages(req, res) {
         res.status(404).send({ error: 'user not found' });
     }
 }
+
+const mockMsgs = [
+  {
+    from: "donald",
+    to: "nikita",
+    message: "Hello Niki, how are your?",
+    time: Date.now() - 86400,
+    read: true,
+  },
+  {
+    from: "nikita",
+    to: "donald",
+    message: "Hi, I'm doing great",
+    time: Date.now() - 16400,
+    read: true,
+  },
+  {
+    from: "donald",
+    to: "lsmith",
+    message: "Have you read my report yet?",
+    time: Date.now() - 60400,
+    read: true,
+  },
+  {
+    from: "lsmith",
+    to: "donald",
+    message: "What report?",
+    time: Date.now() - 88400,
+    read: true,
+  },
+  {
+    from: "donald",
+    to: "nikita",
+    message: "Lee don't event know about the report",
+    time: Date.now() - 12000,
+    read: true,
+  },
+];
 
 
 function startIO(io, socket) {
@@ -70,8 +108,8 @@ function startIO(io, socket) {
         );
     });
 
-    socket.on("my chat", (msg) => {
-        io.to(msg.username).emit("my chat", msg);
+    socket.on("my msg", (msg) => {
+        io.to(msg.username).emit("my msg", msg);
     });
 
 }

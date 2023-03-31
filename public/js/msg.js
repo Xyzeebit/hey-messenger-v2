@@ -3,20 +3,22 @@
 const onlineUsers = [];
 window.addEventListener('DOMContentLoaded', function (event) {
     const socket = io();
+    const user = document.querySelector('.app__user').innerText.replace('@', '');
 
     socket.on("connection", () => {
         console.log("connected to server");
     });
 
-    socket.on("msg", (msg) => {
+    socket.on("my msg", (msg) => {
         console.log(msg)
+        // ..add message
+        addMessage(msg, user);
     });
 
     socket.on('is online', checkOnlineUsers);
 
     //Broadcast that this user is online
     setInterval(() => {
-        const user = document.querySelector('.app__user').innerText.replace('@', '');
         socket.emit("is online", { id: user, username: user, online: true });
     }, 30000);
 
@@ -77,7 +79,7 @@ const sendMessage = evt => {
 }
 
 function addMessage(msg, user) {
-    const { message, time, from } = msg;
+    const { message, time, from, to } = msg;
     const span = Object.assign(document.createElement("span"), {
       className: `${from === user ? "to" : "from"} chat__bubble`,
       style: `display: flex;
@@ -103,7 +105,7 @@ const scrollToBottom = () => {
     messageList.scrollTop = messageList.scrollHeight;
 }
 
-async function selectContact(evt) {
+function selectContact(evt) {
     const [name, username, imgSrc] = this.children[this.children.length - 1].value.split(':');
     document.querySelector('.chat__window').style.display = 'block';
     const user = document
@@ -113,14 +115,19 @@ async function selectContact(evt) {
     img.src = imgSrc;
     img.setAttribute('alt', username);
     h4.innerText = name.trim() === '@' ? username : name;
-    
-    const messages = await fetchMessages(username);
-    
-    if (messages && messages.length > 0) {
-        messages.forEach(message => addMessage(message, user));
-    } else {
 
-    }
+    new Promise(resolve =>  {
+        const node = document.querySelector(".text__chat");
+        document.querySelector('.chats').remove();
+        const div = document.createElement('div');
+        div.setAttribute('class', 'message__list chats');
+        node.appendChild(div);
+        const messages = fetchMessages(username);
+        resolve(messages);
+    }).then((messages) => {
+        console.log(messages)
+        messages.forEach((message) => addMessage(message, user));
+    });
 
 }
 
