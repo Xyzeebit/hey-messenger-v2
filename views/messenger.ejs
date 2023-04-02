@@ -81,7 +81,7 @@
                     username: "donald",
                     lastSeen: (d.getHours() + ":" + d.getMinutes()),
                     lastSent: "even if I was there, what was I suppose to do?",
-                    unRead: 22,
+                    unRead: 0,
                     photo: "avatar.png",
                     // isOnline: false,
                 },
@@ -94,7 +94,9 @@
                 <ul class="contact__list">
                     <% for (const contact of contacts) { %> 
                         <li id="<%= contact.username %>" class="contact">
-                            <% const imgUrl = '/img/' + contact.photo %> 
+                            <% 
+                                const imgUrl = '/img/' + contact.photo;
+                            %> 
                             <div class="img__container">
                                 <% if(contact.isOnline) { %> 
                                     <span class="online"></span>
@@ -110,13 +112,13 @@
                                 <p><% if(contact.lastSent) { %> <%= contact.lastSent %> <% } %>  </p>
                             </div>
                             <div class="time__badge">
-                                <span class="badge">
+                                <span class="badge" style="display: <%= contact.unRead > 0 ? 'flex' : 'none' %>" data-count="<%= contact.unRead %>">
                                     <% if(contact.unRead < 10) { %> 
                                         <%= contact.unRead %> 
                                     <% } else { %> 
                                         <%= "9+" %> 
                                     <% } %> 
-                                </span>
+                                </span> 
                                 <span class="time"><%= contact.lastSeen %></span>
                             </div>
                             <input type="hidden" value="<%= contact.name ? contact.name : '@' %>:<%= contact.username %>:<%= imgUrl %>">

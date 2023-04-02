@@ -15,9 +15,29 @@ window.addEventListener('DOMContentLoaded', function (event) {
         // console.log('my chat', msg)
         // ..add message
         // addMessage(msg, user);
-        if (msg.from !== user) {
+        if (msg.from !== user && msg.from === currentSelectedContact) {
             addMessage(msg, user);
-            //..Notify user
+        }
+        // ..Notify user
+        if (currentSelectedContact !== msg.from && msg.from !== user) {
+            
+            const badge = document.querySelector("#" + msg.from + " .badge");
+            
+            if (badge) {
+                const str = badge.getAttribute('data-count');
+                const count = parseInt(str) + 1;
+                badge.setAttribute('data-count', count);
+                if (count > 0) {
+                    if (count < 10) {
+                        badge.innerText = count;
+                    } else {
+                        badge.innerText = '9+'
+                    }
+                    badge.style.display = 'flex';
+                } else {
+                    badge.style.display = "none";
+                }
+            }
         }
     });
 
@@ -142,7 +162,15 @@ function selectContact(evt) {
     }).then((messages) => {
         messages.forEach((message) => addMessage(message, user));
     });
+    clearMessageCounter(username.trim());
+}
 
+function clearMessageCounter(id) {
+    const badge = document.querySelector('#' + id + ' .badge');
+    if (badge) {
+        badge.setAttribute('data-count', 0);
+        badge.style.display = 'none';
+    }
 }
 
 async function fetchMessages(username) {
@@ -172,7 +200,7 @@ function createChatIds() {
 
 // find online users and notify this user
 function checkOnlineUsers({ id, username, online }) {
-    console.log(username, 'is online' , online, onlineUsers)
+    
     if (online) {
         const contact = document.getElementById(id.trim());
         if (contact /* && onlineUsers.indexOf(username) === -1 */) {
@@ -191,17 +219,3 @@ function checkOnlineUsers({ id, username, online }) {
     }
 }
 
-// async function addMessage(data) {
-//     const resp = await fetch('/messages/add', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify(data),
-//     });
-//     if (resp.ok) {
-//         const text = await resp.json();
-//         console.log(text)
-//         return text;
-//     }
-// }
