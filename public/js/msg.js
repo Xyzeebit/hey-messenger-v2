@@ -3,7 +3,6 @@
 const onlineUsers = [];
 let socket;
 let currentSelectedContact;
-let chatMessages = [];
 window.addEventListener('DOMContentLoaded', function (event) {
     socket = io();
     const user = document.querySelector('.app__user').innerText.replace('@', '');
@@ -13,7 +12,7 @@ window.addEventListener('DOMContentLoaded', function (event) {
     });
 
     socket.on("my msg", (msg) => {
-        console.log('my chat', msg)
+        // console.log('my chat', msg)
         // ..add message
         // addMessage(msg, user);
         if (msg.from !== user) {
@@ -49,6 +48,14 @@ window.addEventListener('DOMContentLoaded', function (event) {
     contacts.forEach(contact => contact.addEventListener('click', selectContact));
 
     
+});
+
+window.addEventListener('beforeunload', function (evt) {
+    const user = document
+        .querySelector(".app__user")
+        .innerText.replace("@", "");
+
+    socket.emit('is online', { id: user, username: user, online: false });
 });
 
 const handleChatInput = (evt) => {
@@ -165,14 +172,21 @@ function createChatIds() {
 
 // find online users and notify this user
 function checkOnlineUsers({ id, username, online }) {
+    console.log(username, 'is online' , online, onlineUsers)
     if (online) {
-        const contact = document.getElementById(id);
-        if (contact && onlineUsers.indexOf(username) === -1) {
+        const contact = document.getElementById(id.trim());
+        if (contact /* && onlineUsers.indexOf(username) === -1 */) {
             const [imgContainer] = contact.children;
             const span = document.createElement("span");
             span.setAttribute("class", "online");
             imgContainer.prepend(span);
-            onlineUsers.push(username);
+            // onlineUsers.push(username);
+        }
+    } else {
+        const onl = document.querySelector(`#${id.trim()} .online`);
+        if (onl) {
+            onl.remove();
+            // onlineUsers = onlineUsers.filter(u => u !== username);
         }
     }
 }
@@ -191,38 +205,3 @@ function checkOnlineUsers({ id, username, online }) {
 //         return text;
 //     }
 // }
-
-async function fetchMessagesMock(username) {
-    return [
-        {
-            message: "how are your?",
-            time: Date.now() - 2000,
-            from: "donald",
-            to: "peters",
-        },
-        {
-            message: "how are your again?",
-            time: Date.now() - 1000,
-            from: "donald",
-            to: "peters",
-        },
-        {
-            message: "I'm fine",
-            time: Date.now(),
-            from: username,
-            to: "donald",
-        },
-        {
-            message: "how is your work",
-            time: Date.now() + 1000,
-            from: "donald",
-            to: "peters",
-        },
-        {
-            message: "we are doing great",
-            time: Date.now() + 2000,
-            from: username,
-            to: "donald",
-        },
-    ];
-}

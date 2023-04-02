@@ -93,7 +93,7 @@
             <aside class="contacts">
                 <ul class="contact__list">
                     <% for (const contact of contacts) { %> 
-                        <li id="<%= contact.username %> " class="contact">
+                        <li id="<%= contact.username %>" class="contact">
                             <% const imgUrl = '/img/' + contact.photo %> 
                             <div class="img__container">
                                 <% if(contact.isOnline) { %> 
