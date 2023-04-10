@@ -3,6 +3,7 @@
 const onlineUsers = [];
 let socket;
 let currentSelectedContact;
+let searchResult;
 window.addEventListener('DOMContentLoaded', function (event) {
     socket = io();
     const user = document.querySelector('.app__user').innerText.replace('@', '');
@@ -57,16 +58,18 @@ window.addEventListener('DOMContentLoaded', function (event) {
     // component selectors
     const textarea = document.querySelector('.input__area');
     const sendBtn = document.querySelector('.btn__send');
-    // const contactList = document.querySelector('.contact__list');
     const contacts = document.querySelectorAll('.contact');
+    const searchBox = document.getElementById('search-box');
+    const searchList = document.querySelector('.search__list');
 
     // component event listeners
     sendBtn.addEventListener('click', sendMessage);
     textarea.addEventListener('keyup', handleChatInput);
     textarea.addEventListener('keyup', enableSendButton);
-    // contactList.addEventListener('click', selectContact);
     contacts.forEach(contact => contact.addEventListener('click', selectContact));
-
+    searchBox.addEventListener('keyup', onChange);
+    searchBox.addEventListener('focus', onFocus);
+    searchBox.addEventListener('blur', onBlur);
     
 });
 
@@ -219,3 +222,78 @@ function checkOnlineUsers({ id, username, online }) {
     }
 }
 
+function onChange(evt) { 
+    if (evt.target.value.trim().length < 3) {
+        return;
+    }
+
+    document.querySelector(".search__list").style.display = "block";
+    document.querySelector(".search__progress").style.display = "flex";
+    const list = document.querySelector(".search__list ul");
+
+    new Promise((resolve) => {
+        const result = searchUser(evt.target.value.trim());
+        for (let el of list.children) {
+            el.remove();
+        }
+
+        resolve(result);
+    }).then(results => {
+        results.forEach(result => usersResult(result, list));
+        document.querySelector(".search__progress").style.display = "none";
+    });
+}
+
+async function searchUser(query) {
+    const resp = await fetch(`/search?s=${query}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+    if (resp.ok) {
+        const result = await resp.json();
+        return result;
+    }
+}
+
+function usersResult(searchResult, list) {
+    console.log(searchResult)
+    const li = Object.assign(document.createElement("li"), {
+      className: "search__item",
+      innerHTML: `<img src="/img/${searchResult.photo}" alt="${
+        searchResult.username
+      }" width="50" height="50">
+                            <div>
+                                <p>${
+                                  searchResult.name
+                                    ? searchResult.name
+                                    : searchResult.username
+                                }</p>
+                                <small style="${
+                                  searchResult.name ? "block" : "none"
+                                }">@${searchResult.username}</small>
+                            </div>`,
+    });
+    li.setAttribute("data-username", searchResult.username);
+    li.setAttribute("data-id", searchResult.id);
+    li.setAttribute("data-name", searchResult.name ?? "");
+    li.setAttribute("data-img", searchResult.photo);
+    li.onclick = handleSearch;
+    list.appendChild(li);
+}
+
+function onFocus() {
+    // document.querySelector(".search__list").style.display = 'block';
+    // document.querySelector(".search__progress").style.display = "flex";
+}
+
+function onBlur() {
+    document.querySelector(".search__list").style.display = "none";
+    document.querySelector(".search__progress").style.display = "none";
+}
+
+function handleSearch(evt) {
+    console.log(evt)
+
+}

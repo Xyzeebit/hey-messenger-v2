@@ -50,6 +50,32 @@ async function messages(req, res) {
     }
 }
 
+async function search(req, res) {
+    const { s } = req.query;
+    const r = [
+        {
+            id: "8hujsiIUIU8J",
+            name: "Smith Rowe",
+            username: "roweth",
+            photo: "avatar.png",
+        },
+        {
+            id: "8hugzjsiIUIU8J",
+            name: "Lee Bran",
+            username: "branlee",
+            photo: "avatar.png",
+        },
+        {
+            id: "8hujsnziIUIU8J",
+            name: "Gavin Donald",
+            username: "holyme",
+            photo: "avatar.png",
+        },
+    ].filter((i) => i.name.toLowerCase().includes(s.toLowerCase().trim()) ||
+        i.username.toLowerCase().includes(s.toLowerCase().trim()));
+    res.status(200).send(r);
+}
+
 const mockMsgs = [
   {
     from: "donald",
@@ -120,5 +146,6 @@ function startIO(io, socket) {
 module.exports = {
     startIO,
     messenger,
-    messages
+    messages,
+    search,
 }

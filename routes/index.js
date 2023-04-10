@@ -18,6 +18,9 @@ router.route('/messenger')
 router.route('/messages')
     .get((req, res) => res.redirect('/'))
     .post(auth.hasSession, auth.requireAuthentication, auth.hasAuthorization, messaging.messages);
+
+router.route('/search')
+    .get(auth.hasSession, auth.requireAuthentication, auth.hasAuthorization, messaging.search);
     
 router.get('/logout', auth.signOut);
 
